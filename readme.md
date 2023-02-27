@@ -1,8 +1,17 @@
 # Connie Jacques - API Webserver Project
 
+
 ## R1) Identification of the problem you are trying to solve by building this particular app
 
+This API Webserver Project will build an application to list published Stephen King books and the movie adaptations made from them. It will detail the books, including when they were first published, whether the author published them under his own name or under a pen name, the publisher, ISBN, and other interesting information. Many movies have been produced from the stories told in these books. This application will give users quick assess to information about which books have been made into movies, when, who directed them and how successful and popular they were. The users of this application will also have the ability to keep a record of the movies and books they themselves have pursued and leave a rating. Ratings are useful way for other fans of this author to prioritise the books and movies they wish to spend their time consuming next, as there is a large number of both available. As such, the problem this application attempts to solve is the need for a convenient way for fans to find out what is available and what other fans have enjoyed the most, to help them choose what to view or read next. 
+
+
 ## R2) Why is it a problem that needs solving?
+
+Our modern society is a busy one. Many people are working to excess, burnt out, stressed out and in need of a way to relax at the end of the day. For many, reading books and watching movies is a great way to do this; however, the volume of reading and viewing material available can be overwhelming and make choosing something to spend time on difficult. Knowing that you are a fan of an author, director or genre already can help to narrow down the choices but sometimes there are still a lot of options available and being able to choose something we are confident we will enjoy can be challenging. 
+
+This API will aid fans of Stephen King’s work, or the horror genre more broadly, to choose a way to spend their time. This author has published 65 novels, and approximately 86 movie adaptations have been made from them. A public API containing information about all of these options does not currently exist; however, it should because this would be a convenient way to access details about these books and movies, and their popularity amongst enthusiasts, would benefit fans. Plus, the additional benefit for an individual to keep track of what they have and have not read and watched previously is undeniably handy.
+
 
 ## R3) Why have you chosen this database system. What are the drawbacks compared to others?
 
