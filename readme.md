@@ -31,7 +31,22 @@ Drawbacks:
 - Complexity - a normalised relational database model can be complex as the information is split across many tables. Keeping track of the relationships between tables can be tedious. The need for more standalone and joining tables can become necessary if the data stored within the database diversifies over time, which will compound the issue (IONOS 2023).
 - Decreased performance as data size increases - over time, it is common for a database to become very large. As Postgres is a relational database, queries are often made across several tables. The ability to do this is a key reason for using a relational database in the first place; however, when the database is large, complex queries can have a slow response time, especially if many users are accessing the database simultaneously (IONOS 2023).
 
+
 ## R4) Identify and discuss the key functionalities and benefits of an ORM
+
+Object Relational Mapping (ORM) connects an object orientated program to a relational database (Abba 2022). Relational databases have functionality to create, read, update and delete (CRUD) information stored in tables. The ability to perform these operations is a key reason for using a relational database. This functionality can be utilised by performing transitions with SQL on the command line, but it can be more convenient to have code written into a program to do this. For this reason, an ORM tool is used to allow for direct interaction between the database and an Object Orientation Programming (OOP) language (Abba 2022). 
+
+OOP languages use objects to represent data. These consist of classes (blueprints outlining what information is needed to define the object) and their instances (objects with this information filled in). A RDBMS represents data in a tabular format (tables made up of rows and columns). The term ‘object-relational independence mismatch’ is used to describe the fundamental differences that exist between these two paradigms, including the use of dissimilar data structures, divergence in the way data is interacted with, and basic conceptual distinctions (Tina 2020). To make these two seperate things work together, we need an ORM tool.
+
+The process of converting data from the database into an object is called hydration. This is done by converting values from columns in a table into object properties (Tina 2020). A table’s column attributes form the base of a class and the individual values contained within the column are transcribed to become the specific properties of a class instantiation. For this reason, ORM tools are language specific. This webserver application will use the ORM tool SQLAlchemy with the database adaptor/driver psycopg2 to enable the use of the OOP language python with a PostgreSQL database.
+
+In addition to performing these key functionaries, some of the benefits of using an ORM include:
+
+- Instead of writing lengthy SQL commands, methods from the ORM are used. An ORM has many built-in methods for performing transitions on the database. These methods are shorter to write thus reducing the volume of code needed to perform an operation and encourage DRY coding practices. Once a developer in familiar with the methods available for a particular ORM, they can reduce development time (Abba 2022). This increase in productive is additionally beneficial as it reduces the cost to develop software. 
+- An ORM abstracts away some of the tedious workings of querying the database allowing programmer to focus on performing the tasks without having to think too much about how it happens.
+- An ORM tool adds a layer of removal to SQL queries within the code, as explicit SQL commands are not used. Because of this, an application utilising ORM can be more secure against malicious SQL injection attacks by third parties (Admin Globaldots 2021, Abba 2022).
+- ORM tools allow for queries to be stated but not executed until they are called i.e. the logic for querying a database can be outlined in the OOP language but is not used until it is needed. This is known as lazy-loading (Imperva 2022).
+
 
 ## R5) Document all endpoints for your API
 
@@ -48,6 +63,15 @@ Drawbacks:
 
 ## References 
 
+Abba, Ihechikara Vincent (2022) *What is an ORM – The Meaning of Object Relational Mapping Database Tools
+*, Free Code Camp. Accessed at: https://www.freecodecamp.org/news/what-is-an-orm-the-meaning-of-object-relational-mapping-database-tools/ (Accessed on 26 February 2023)
+
+Admin Globaldots (2021) *8 best practices to prevent SQL injection attacks*, GlobalDots. Accessed at: https://www.globaldots.com/resources/blog/8-best-practices-to-prevent-sql-injection-attacks/ (Accessed on 27 February 2023)
+
+Imperva (2022) *Lazy Loading*, Imperva Learning Center. Accessed at: https://www.imperva.com/learn/performance/lazy-loading/ (Accessed on 27 February 2023)
+
 IONOS (2023) *PostgreSQL: a closer look at the object-relational database management system*, IONOS Digital Guide. Accessed at: https://www.ionos.com/digitalguide/server/know-how/postgresql/ (Accessed on 25 February 2023)
 
 MariaDB (2023) *What is ACID Compliance in a Database? What It Means and Why You Should Care*, MariaDB. Accessed at: https://mariadb.com/resources/blog/acid-compliance-what-it-means-and-why-you-should-care/ (Accessed on 25 February 2023)
+
+Tina (2020) *Introduction to Object-relational mapping: the what, why, when and how of ORM*, .dev. Accessed at: https://dev.to/tinazhouhui/introduction-to-object-relational-mapping-the-what-why-when-and-how-of-orm-nb2 (Accessed on 26 February 2023)
