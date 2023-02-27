@@ -61,6 +61,8 @@ In addition to performing these key functionaries, some of the benefits of using
 
 ## R6) An ERD for your app
 
+![Stephen King DB ERD](./docs/stephen_king_db_erd.jpg)
+
 ## R7) Detail any third party services that your app will use
 
 ## R8) Describe your projects models in terms of the relationships they have with each other
