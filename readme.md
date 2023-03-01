@@ -1,19 +1,19 @@
 # Connie Jacques - API Webserver Project
 
 
-## R1) Identification of the problem you are trying to solve by building this particular app
+### R1) Identification of the problem you are trying to solve by building this particular app
 
 This API Webserver Project will build an application to list published Stephen King books and the movie adaptations made from them. It will detail the books, including when they were first published, whether the author published them under his own name or under a pen name, the publisher, ISBN, and other interesting information. Many movies have been produced from the stories told in these books. This application will give users quick assess to information about which books have been made into movies, when, who directed them and how successful and popular they were. The users of this application will also have the ability to keep a record of the movies and books they themselves have pursued and leave a rating. Ratings are useful way for other fans of this author to prioritise the books and movies they wish to spend their time consuming next, as there is a large number of both available. As such, the problem this application attempts to solve is the need for a convenient way for fans to find out what is available and what other fans have enjoyed the most, to help them choose what to view or read next. 
 
 
-## R2) Why is it a problem that needs solving?
+### R2) Why is it a problem that needs solving?
 
 Our modern society is a busy one. Many people are working to excess, burnt out, stressed out and in need of a way to relax at the end of the day. For many, reading books and watching movies is a great way to do this; however, the volume of reading and viewing material available can be overwhelming and make choosing something to spend time on difficult. Knowing that you are a fan of an author, director or genre already can help to narrow down the choices but sometimes there are still a lot of options available and being able to choose something we are confident we will enjoy can be challenging. 
 
 This API will aid fans of Stephen King’s work, or the horror genre more broadly, to choose a way to spend their time. This author has published 65 novels, and approximately 86 movie adaptations have been made from them. A public API containing information about all of these options does not currently exist; however, it should because this would be a convenient way to access details about these books and movies, and their popularity amongst enthusiasts, would benefit fans. Plus, the additional benefit for an individual to keep track of what they have and have not read and watched previously is undeniably handy.
 
 
-## R3) Why have you chosen this database system. What are the drawbacks compared to others?
+### R3) Why have you chosen this database system. What are the drawbacks compared to others?
 
 For this project, I will be using the relational database management system PostgreSQL. 
 
@@ -41,7 +41,7 @@ Drawbacks:
 - Decreased performance as data size increases - over time, it is common for a database to become very large. As Postgres is a relational database, queries are often made across several tables. The ability to do this is a key reason for using a relational database in the first place; however, when the database is large, complex queries can have a slow response time, especially if many users are accessing the database simultaneously (IONOS 2023).
 
 
-## R4) Identify and discuss the key functionalities and benefits of an ORM
+### R4) Identify and discuss the key functionalities and benefits of an ORM
 
 Object Relational Mapping (ORM) connects an object orientated program to a relational database (Abba 2022). Relational databases have functionality to create, read, update and delete (CRUD) information stored in tables. The ability to perform these operations is a key reason for using a relational database. This functionality can be utilised by performing transitions with SQL on the command line, but it can be more convenient to have code written into a program to do this. For this reason, an ORM tool is used to allow for direct interaction between the database and an Object Orientation Programming (OOP) language (Abba 2022). 
 
@@ -57,19 +57,38 @@ In addition to performing these key functionaries, some of the benefits of using
 - ORM tools allow for queries to be stated but not executed until they are called i.e. the logic for querying a database can be outlined in the OOP language but is not used until it is needed. This is known as lazy-loading (Imperva 2022).
 
 
-## R5) Document all endpoints for your API
+### R5) Document all endpoints for your API
 
-## R6) An ERD for your app
+### R6) An ERD for your app
 
 ![Stephen King DB ERD](./docs/stephen_king_db_erd.jpg)
 
-## R7) Detail any third party services that your app will use
+### R7) Detail any third party services that your app will use
 
-## R8) Describe your projects models in terms of the relationships they have with each other
+Flask: This application will be built on Flask, which is a python web application framework and is imported as a python module. Flask is a Webserver Gateway Interface (WSGI), meaning that it controls communication between servers and our python application (Python Basics 2021). 
 
-## R9) Discuss the database relations to be implemented in your application
+Flask-SQLAlchemy: This application will utilise the ORM tool SQLAlchemy to control the relationships between our python objects and the tables in our PostgreSQL database. To use SQLAlchemy in this project, we will be using Flask-SQLAlchemy, which will be imported as a python module. Flask-SQLAlchemy is a specific extension for Flask to enable the use of SQLAlchemy. It provides the full range of functionality offered by SQLAlchemy but simplifies the execution of this specifically for a Flask application by providing handy defaults and helper methods for some common transactions performed on a relational database (Pallets 2010). The Model method from Flask-SQLAlchemy will be used to create models for this project. One benefit of using this method to create our models is that, although a custom name can be specified, it will automatically set the class name converted to camel case as table name in the database if we do not do this. The Column method will be used to define the columns in our tables so we can set a variable name as the column name, declare a primary key as an auto-incrementing integer that Flask-SQLAlchemy will manage for us, and specify a datatype (Integer, String, Text, DataTime, Float, Boolean, PickleType or LargeBinary) for each column to ensure data integrity is maintained (Pallets 2010). The Model method also allows us to outline the relationships between tables and define them as one-to-many by using the relationship() function in conjunction with the ForeignKey method or many-to-many by using the Tables and ForeignKey methods(Pallets 2010). 
 
-## R10) Describe the way tasks are allocated and tracked in your project
+Psycopg2: Psycopg2 is a popular database adapter used to connect Flask with a PostgreSQL database and enable communication between the two to be written in Python (PyPi 2022) and will be imported as a module for use in this project.
+
+Flask-marshmallow: Flask-marshmallow is an integration tool used to enable Flask to work with the python library marshmallow. Python objects cannot be directly converted to json format, for this we need to use marshmallow. Marshmallow is used to convert complex datatypes (such as json formatted data) and objects into datatypes and objects that python can work with directly (Loria 2022). In our application, it will be used to validate data and serialise (convert) python objects into serialised objects which can be formatted in json, and to convert them back again (deserialisation). Flask-marshmallow is will also be used to generate schemas from our models. Schemas control what information from the database tables is displayed to the user. The flask-marshmallow method Schema will be used when defining the schemas for our project as this will allow us to use fields to specify exactly which fields (columns) to expose and the Nested method will be utilised imbed schemas for Foreign Keys within the output (Loria 2022).
+
+Marshmallow-sqlalchemy: Marshmallow-sqlalchemy is used to integrate the python module marshmallow with flask-sqlalchemy (Loria 2023).
+
+Flask-jwt-extended: JSON Web Tokens are used to authenticate a user in secure way. Instead of sending a user’s credentials with a request, a JWT is sent instead and this is verified against a secret key that is stored as an environment variable (Coder Academy 2023). The python package, flask-jwt-extended will be used in this project to enable us to do use JWTs for user authentication. The function create_access_token() will be used to generate a JWT, get_jwt_identity() will be used to verify a user is authenticated, and jwt_required() will be used to specify a route requires a JWT to access it (Loria 2022). These functions will be used with the JWTManager method to secure routes that have imbedded logic to make changes on our database. 
+
+Flask-bcrypt: hashing is a way to encrypt sensitive information, such as passwords. As new technologies continue to be developed, so do malicious programs that can be used to hack applications with the goal of creating damage and/or stealing personal information (Countryman 2011). Because of this, a secure way to make an encryption more difficult to crack is needed. Bcrypt hashing will be used in this application because it is a ‘de-optimised’ hashing method, designed to be more tedious to crack. The python module flask-bcrypt will be imported for this and the function generate_password_hash({password}).decode(‘utf-8’) to secure passwords and assign them to a variable. 
+
+os: The os library provides various operating system dependent functionalities. This project will use the enrivon.get() function from the os package to retrieve a user’s environment variables for the JWT secret key and database url. 
+
+DateTime: The python package DateTime is used to create datetime objects and format them (Python Software Foundation 2023). The timedelta() function from the DateTime  library will be used to set and track expiry times for JSON Web Tokens used in our application. 
+
+
+### R8) Describe your projects models in terms of the relationships they have with each other
+
+### R9) Discuss the database relations to be implemented in your application
+
+### R10) Describe the way tasks are allocated and tracked in your project
 
 
 ## References 
@@ -79,10 +98,32 @@ Abba, Ihechikara Vincent (2022) *What is an ORM – The Meaning of Object Relati
 
 Admin Globaldots (2021) *8 best practices to prevent SQL injection attacks*, GlobalDots. Accessed at: https://www.globaldots.com/resources/blog/8-best-practices-to-prevent-sql-injection-attacks/ (Accessed on 27 February 2023)
 
+Coder Academy (2023) *JWT Authentication*, Flask Authentication, Coder Academy, Ed Lessons. Accessed at: https://edstem.org/au/courses/10081/lessons/27620/slides/195163 (Accessed on 1 March 2023)
+
+Countryman, Max (2011) *Flask-Bcrypt*, Read the Docs. Accessed at: https://flask-bcrypt.readthedocs.io/en/1.0.1/ (Accessed on 1 March 2023)
+
 Imperva (2022) *Lazy Loading*, Imperva Learning Center. Accessed at: https://www.imperva.com/learn/performance/lazy-loading/ (Accessed on 27 February 2023)
 
 IONOS (2023) *PostgreSQL: a closer look at the object-relational database management system*, IONOS Digital Guide. Accessed at: https://www.ionos.com/digitalguide/server/know-how/postgresql/ (Accessed on 25 February 2023)
 
+Loria, Steven (2022) *Basic Usage*, Read the Docs. Accessed at: https://flask-jwt-extended.readthedocs.io/en/stable/basic_usage/ (Accessed on 1 March 2023)
+
+Loria, Steven (2022) *flask-marshmallow*, Read the Docs. Accessed at: https://flask-marshmallow.readthedocs.io/en/latest/ (Accessed on 1 March 2023)
+
+Loria, Steven (2022) *marshmallow: simplified object serialization*, Read the Docs. Accessed at: https://marshmallow.readthedocs.io/en/stable/ (Accessed on 28 February 2023)
+
+Loria, Steven (2023) *marshmallow-sqlalchemy*, Read the Docs. Accessed at: https://marshmallow-sqlalchemy.readthedocs.io/en/latest/ (Accessed on 28 February 2023)
+
 MariaDB (2023) *What is ACID Compliance in a Database? What It Means and Why You Should Care*, MariaDB. Accessed at: https://mariadb.com/resources/blog/acid-compliance-what-it-means-and-why-you-should-care/ (Accessed on 25 February 2023)
+
+Pallets (2010) *Declaring Models*, Pallets Projects. Accessed at: https://flask-sqlalchemy.palletsprojects.com/en/2.x/models/ (Accessed on 1 March 2023)
+
+Pallets (2010) *Flask-SQLAlchemy*, Pallets Projects. Accessed at: https://flask-sqlalchemy.palletsprojects.com/en/3.0.x/ (Accessed on 28 February 2023)
+
+PyPi (2022) *psycopg2 - Python-PostgreSQL Database Adapter*, Python Software Foundation. Accessed at: https://pypi.org/project/psycopg2/ (Accessed on 28 February 2023)
+
+Python Basics (2021) *What is Flask Python*, Python Basics. Accessed at: https://pythonbasics.org/what-is-flask-python/ (Accessed on 28 February 2023)
+
+Python Software Foundation (2023) *datetime — Basic date and time types*, Python Docs. Accessed at: https://docs.python.org/3/library/datetime.html (Accessed on 1 March 2023)
 
 Tina (2020) *Introduction to Object-relational mapping: the what, why, when and how of ORM*, .dev. Accessed at: https://dev.to/tinazhouhui/introduction-to-object-relational-mapping-the-what-why-when-and-how-of-orm-nb2 (Accessed on 26 February 2023)
