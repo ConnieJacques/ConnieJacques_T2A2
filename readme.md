@@ -90,6 +90,12 @@ DateTime: The python package DateTime is used to create datetime objects and for
 
 ### R10) Describe the way tasks are allocated and tracked in your project
 
+![Trello Board Start of Project](./docs/Trello-start1.png)
+![Trello Board Start of Project](./docs/Trello-start2.png)
+![Trello Board Start of Project](./docs/Trello-start3.png)
+![Trello Board Start of Project](./docs/Trello-start4.png)
+![Trello Board Start of Project](./docs/Trello-start5.png)
+![Trello Board Start of Project](./docs/Trello-start6.png)
 
 ## References 
 
