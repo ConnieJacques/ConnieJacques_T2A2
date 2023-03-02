@@ -88,6 +88,70 @@ DateTime: The python package DateTime is used to create datetime objects and for
 
 ### R9) Discuss the database relations to be implemented in your application
 
+Users:
+
+- User will be required to register and login to access the Read and Watched tables. 
+- Users will only be able to create a single account as their email address will need to be unique.
+- Users will need to provide their full name and an email address, and set a password that is 8 characters long. 
+- Users may be an admin. Only users with admin privileges will be able to modify the Books and Movies tables.
+- Once logged in, a user can modify only their own entries in the Read and Watched tables. Users with admin privileges will not be able to modify entries in these tables; only the author of the entry can change it.
+- Users has a zero or many relationship with Read. A user may not read any books, but may read a book without watching the movie adaptation.
+- Users has a many to many relationship with Books. A user can read many books.
+- Users has a zero or many relationship with Watched. A user may not watch any movies, but does not have to have read the original book to have seen the movie adaptation. 
+- Users has a many to many relationship with Movies. A user can watch many movies.
+
+Books:
+
+- Books table will be public. A user does not need to be registered or logged in to view the content in this table. Only a user with admin privilege can modify this table.
+- Books has a many to many relationship with Users. Many books can be read by many users.
+- Books has a zero to many relationship with Read. A book may not be read.
+- Books has a zero to many relationship with Movies. One book can be made into many movies, but may not be adapted into a movie at all.
+- Books has a one to one relationship with Authors. One book must have one author. 
+- Books has a one to one relationship with Publishers. One book must have one publisher.
+
+Movies:
+
+- Movies table will be public. A user does not need to be registered or logged in to view the content in this table. Only a user with admin privilege can modify this table.
+- Movies has a many to many relationship with Users. Many movies can be watched by many users.
+- Movies has a zero to many relationship with Watched. A movie may not be watched.
+- Movies has a one to one relationship with Books. One movie must be based on one book.
+- Movies has a one to one relationship with Directors. One movie must have one director.
+- Movies has a one to one relationship with ProductionCompanies. One movie is produced by one production company.
+
+Read:
+
+- Once logged in, a user can review leave a rating between 1 - 10 for a book. 
+- The Read table can only be viewed by logged in Users. Users can only modify their own entries.
+- Read is a joining table for the many to many relationship between Users and Books.
+- Read has a one to one relationship with Users. An entry in the Read table must belong to one user.
+- Read has a one to one relationship with Books. An entry in the Read table must be about one book.
+
+Watched:
+
+- Once logged in, a user can review leave a rating between 1 - 10 for a movie.
+- The Watched table can only be viewed by logged in Users. Users can only modify their own entries.
+- Watched is a joining table for the many to many relationship between Users and Movies.
+- Watched has a one to one relationship with Users. An entry in the Watched table must belong to one user.
+- Watched has a one to one relationship with Movies. An entry in the Watched table must be about one movie.
+
+Authors:
+
+- Authors has a one to many relationship with Books. One author can write many books.
+- A book can be collaborative work.
+- An author can use a pen name.
+
+Publishers:
+
+- Publishers has a one to many relationship with Books. One publisher can publish many books.
+
+Directors:
+
+- Directors has a one to many relationship with Movies. One director can direct many movies.
+
+ProductionCompanies:
+
+- ProductionCompanies has a one to many relationship with Movies. One production company can produce many movies.
+
 ### R10) Describe the way tasks are allocated and tracked in your project
 
 ![Trello Board Start of Project](./docs/Trello-start1.png)
