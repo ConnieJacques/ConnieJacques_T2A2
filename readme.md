@@ -154,12 +154,30 @@ ProductionCompanies:
 
 ### R10) Describe the way tasks are allocated and tracked in your project
 
+To structure the implementation of each step in undertaking this assessment, I have used a Trello board in the kanban project management style to help me visualise the steps I need to complete and manage my time in doing so.
+
+**My Trello board is available here:** 
+
+All tasks are allocated to myself, as this is an individual project.There are four categories: To Do, In Progress, Completed and Nice to Have. Each card contains a step to undertake, details of the actions to be completed, and a timeframe. The timeframe for completing each step is represented with a coloured label. The key for the labels is as follows:
+
+- Green: can be completed in under 30 minutes
+- Yellow: can be completed in under 2 hours
+- Orange: can be completed in 2 - 4 hours.
+
+I have broken the steps down into enough detail that no card should take longer than 4 hours to complete. All cards held equal weight in terms of their priority. The To Do tasks were placed from the top of the category down in the anticipated order of competition, so that tasks that needed to be done before another could be started were undertaken first. When a task was started in was moved to the In Progress tab, and moved again to the Completed tab once it was finished. As I was utilising a kanban project management style, tasks that were moved to the Completed category could be moved back to the In Progress tab, if a review of the completed work was needed. Many tasks could be In Progress at the same time.
+
+The Nice to Have category contained only cards to add in entries for all published Stephen Books and all the movie adaptations that have been made from these. The plan was to include only the five oldest novels and movies in the minimal viable product (MVP) so as to ensure enough time to focus on getting the body of the assessment completed, and add the whole lot only if there was enough time to do so before the submission date. 
+
+This planning method was highly successful in allowing me visualise the remaining workload, allocate appropriate time for each task and complete the project without forgetting to do any particular task.
+The following screenshots were taken as I worked my through the project. Some show what is contain on an individual card, while others show overall progress. All of the cards can be accessed on Trello via the link provided above.
+
 ![Trello Board Start of Project](./docs/Trello-start1.png)
 ![Trello Board Start of Project](./docs/Trello-start2.png)
 ![Trello Board Start of Project](./docs/Trello-start3.png)
 ![Trello Board Start of Project](./docs/Trello-start4.png)
 ![Trello Board Start of Project](./docs/Trello-start5.png)
 ![Trello Board Start of Project](./docs/Trello-start6.png)
+
 
 ## References 
 
