@@ -171,6 +171,8 @@ The Nice to Have category contained only cards to add in entries for all publish
 This planning method was highly successful in allowing me visualise the remaining workload, allocate appropriate time for each task and complete the project without forgetting to do any particular task.
 The following screenshots were taken as I worked my through the project. Some show what is contain on an individual card, while others show overall progress. All of the cards can be accessed on Trello via the link provided above.
 
+Start of the project
+
 ![Trello Board Start of Project](./docs/Trello-start1.png)
 ![Trello Board Start of Project](./docs/Trello-start2.png)
 ![Trello Board Start of Project](./docs/Trello-start3.png)
@@ -178,6 +180,15 @@ The following screenshots were taken as I worked my through the project. Some sh
 ![Trello Board Start of Project](./docs/Trello-start5.png)
 ![Trello Board Start of Project](./docs/Trello-start6.png)
 
+Questions for the readme.md file were answered, where possible, prior to beginning to code out the API
+
+![Trello Board Readme in Progress](./docs/Trello-readme-qs.png)
+![Trello Board Readme in Progress](./docs/Trello-readme-qs2.png)
+
+Cards were made for each section of the API to reflect the required MVC structure
+
+![Trello Board Update - Start of Coding](./docs/Trello-coding1.png)
+![Trello Board Update - Start of Coding - Working on Models](./docs/Trello-coding2-models.png)
 
 ## References 
 
