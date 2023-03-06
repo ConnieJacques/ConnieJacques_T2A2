@@ -10,6 +10,7 @@ class Movie(db.Model):
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
     director_id = db.Column(db.Integer, db.ForeignKey('director.id'), nullable=False)
     production_company_id = db.Column(db.Integer, db.ForeignKey('productioncompany.id'), nullable=False)
+    watched = db.relationship('Watched', backref='watched', cascade="all, delete")
 
 # Define Director model
 class Director(db.Model):

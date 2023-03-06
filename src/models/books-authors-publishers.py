@@ -12,6 +12,7 @@ class Book(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'), nullable=False)
     publisher_id = db.Column(db.Integer, db.ForeignKey('publisher.id'), nullable=False)
     movie = db.relationship('Movie', backref='movie', cascade="all, delete")
+    read = db.relationship('Read', backref='read', cascade="all, delete")
 
 
 # Define Author model

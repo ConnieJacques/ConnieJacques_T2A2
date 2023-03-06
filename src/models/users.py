@@ -8,4 +8,6 @@ class User(db.Model):
     email = db.Column(db.String(), unique=True, nullable=False)
     password = db.Column(db.String(8), nullable=False)
     admin = db.Column(db.Boolean, default=False)
+    watched = db.relationship('Watched', backref='watched', cascade="all, delete")
+    read = db.relationship('Read', backref='read', cascade="all, delete")
 
