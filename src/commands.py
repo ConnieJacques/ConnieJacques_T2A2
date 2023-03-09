@@ -6,7 +6,6 @@ from models.books import Book, Author, Publisher
 from models.movies import Movie, Director, ProductionCompany
 from models.read import Read
 from models.watched import Watched
-from datetime import date
 
 
 # Create database commands Blueprint
@@ -112,39 +111,62 @@ def seed_db():
         title = "The Stand",
         isbn = "0385121687",
         length = "823",
-        first_publication_date = "1978-10-03"
-        copies_published = "70000"
-        author_id = author1.id
+        first_publication_date = "1978-10-03",
+        copies_published = "70000",
+        author_id = author1.id,
         publisher_id = publisher1.id
     )
+    db.session.add(the_stand)
+    db.session.commit()
+
 
     # Seed director table next as needed for movie table
+    director1 = Director(
+        director_name = "Brian De Palma"
+    )
+    db.session.add(director1)
+    db.session.commit()
+
 
     # Seed production_company table next as needed for movie table
+    production1 = ProductionCompany(
+        name = "Red Bank Films"
+    )
+    db.session.add(production1)
+    db.session.commit()
 
     # Seed movie table next
+    carrie_movie = Movie(
+        title = "Carrie",
+        release_date = "1976-11-03",
+        length = "98",
+        box_office_ranking = 22298,
+        book_id = carrie.id,
+        director_id = director1.id,
+        production_company_id = production1.id
+    )
+    db.session.add(carrie_movie)
+    db.session.commit()
+
 
     # Seed read table
+    arbitrary_read = Read(
+        book_id = carrie.id,
+        user_id = admin.id,
+        rating = 7
+    )
+    db.session.add(arbitrary_read)
+    db.session.commit()
+
 
     # Seed watched table
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    arbitrary_watched = Watched(
+        movie_id = carrie_movie.id,
+        user_id = admin.id,
+        rating = 7
+    )
+    db.session.add(arbitrary_watched)
+    db.session.commit()
 
 
 # Drop table CLI command - execute using "flask drop" on the command line
