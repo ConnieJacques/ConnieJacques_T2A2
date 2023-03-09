@@ -189,6 +189,7 @@ Cards were made for each section of the API to reflect the required MVC structur
 
 ![Trello Board Update - Start of Coding](./docs/Trello-coding1.png)
 ![Trello Board Update - Start of Coding - Working on Models](./docs/Trello-coding2-models.png)
+![Trello Board Update - Working on Commands](./docs/Trello-coding3-commands.png)
 
 ## References 
 
