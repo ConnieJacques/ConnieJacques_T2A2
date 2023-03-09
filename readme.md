@@ -185,11 +185,13 @@ Questions for the readme.md file were answered, where possible, prior to beginni
 ![Trello Board Readme in Progress](./docs/Trello-readme-qs.png)
 ![Trello Board Readme in Progress](./docs/Trello-readme-qs2.png)
 
-Cards were made for each section of the API to reflect the required MVC structure
+Cards were made and completed for each section of the API to reflect the required MVC structure
 
 ![Trello Board Update - Start of Coding](./docs/Trello-coding1.png)
 ![Trello Board Update - Start of Coding - Working on Models](./docs/Trello-coding2-models.png)
 ![Trello Board Update - Working on Commands](./docs/Trello-coding3-commands.png)
+![Trello Board Update - Working on Schemas](./docs/Trello-coding4-schemas.png)
+![Trello Board Update - Working on Controllers](./docs/Trello-coding5-controllers.png)
 
 ## References 
 
