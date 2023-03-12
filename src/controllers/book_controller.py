@@ -12,7 +12,7 @@ from models.users import User
 books = Blueprint('books', __name__, url_prefix="/books")
 
 
-# Query database to get all the books from the books table. 
+# Query database to get all the books from the book table. 
 # Public access - no authentication required
 @books.route("/", methods=["GET"])
 def get_all_books():
@@ -40,12 +40,6 @@ def search_books():
         # Query database by length of book
         elif request.args.get('length'):
             books_list = Book.query.filter_by(length=request.args.get('length'))
-        # Query database by a book's unique isbn number
-        elif request.args.get('isbn'):
-            books_list = Book.query.filter_by(isbn=request.args.get('isbn')).first()
-        # Query database by book_id
-        elif request.args.get('id'):
-            books_list = Book.query.filter_by(id=request.args.get('id')).first()
         # Query database by an author_id and return all books written by that author
         elif request.args.get('author_id'):
             books_list = Book.query.filter_by(author_id=request.args.get('author_id'))
@@ -55,6 +49,30 @@ def search_books():
 
         # Return books_list in JSON format
         result = books_schema.dump(books_list)
+        return jsonify(result)
+    # Catch errors if no results is returned or an invalid query is attempted
+    except exc.NoResultFound:
+        return abort(404, "No results found. Please check you are using a valid query method.")
+    except exc.DataError:
+        return abort(404, "No results found. Please check you are using a valid query method.")
+    
+
+# Query the books table with a query string
+@books.route("/search/entry", methods=["GET"])
+def search_book():
+    try:
+        # Create a list to hold the results
+        book_list = []
+
+        # Query database by a book's unique isbn number
+        if request.args.get('isbn'):
+            book_list = Book.query.filter_by(isbn=request.args.get('isbn')).first()
+        # Query database by book_id
+        elif request.args.get('id'):
+            book_list = Book.query.filter_by(id=request.args.get('id')).first()
+
+        # Return books_list in JSON format
+        result = book_schema.dump(book_list)
         return jsonify(result)
     # Catch errors if no results is returned or an invalid query is attempted
     except exc.NoResultFound:
@@ -120,7 +138,7 @@ def update_book(id):
         if not user:
             return abort(400, description="User not found. Please login.")
         if user.admin != True:
-            return abort(403, description="You are not authorized to add a book.")
+            return abort(403, description="You are not authorized to change the details of a book.")
         
         # Find the book by id
         book = Book.query.filter_by(id=id).first()
