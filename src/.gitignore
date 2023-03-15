@@ -3,3 +3,4 @@
 .flaskenv
 __pycache__*
 .venv/
+../docs/.DS_Store

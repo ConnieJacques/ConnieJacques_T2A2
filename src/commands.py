@@ -1,6 +1,5 @@
-from app import db
+from app import db, bcrypt
 from flask import Blueprint
-from app import bcrypt
 from models.users import User
 from models.books import Book, Author, Publisher
 from models.movies import Movie, Director, ProductionCompany
@@ -167,6 +166,9 @@ def seed_db():
     )
     db.session.add(arbitrary_watched)
     db.session.commit()
+
+
+    print("Tables Seeded.")
 
 
 # Drop table CLI command - execute using "flask drop" on the command line
