@@ -9,10 +9,11 @@ class Book(db.Model):
     length = db.Column(db.String(), nullable=False)
     first_publication_date = db.Column(db.DateTime, nullable=False)
     copies_published = db.Column(db.String(), nullable=False)
+    # Define Foreign Keys
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'), nullable=False)
     publisher_id = db.Column(db.Integer, db.ForeignKey('publisher.id'), nullable=False)
-    movie = db.relationship('Movie', backref='movie', cascade="all, delete")
-    read = db.relationship('Read', backref='read', cascade="all, delete")
+    # Define relationship with read table
+    read = db.relationship('Read', backref='book')
 
 
 # Define Author model
@@ -22,11 +23,13 @@ class Author(db.Model):
     collaboration = db.Column(db.Boolean)
     pen_name = db.Column(db.Boolean)
     collaborator_name = db.Column(db.String())
-    author = db.relationship('Book', backref='author', cascade="all, delete")
+    # Define relationship to book table
+    author = db.relationship('Book', backref='author')
 
 
 # Define Publisher model
 class Publisher(db.Model):
     id = id = db.Column(db.Integer, primary_key=True)
     publisher_name = db.Column(db.String(), nullable=False)
-    publisher = db.relationship('Book', backref='publisher', cascade="all, delete")
+    # Define relationship to book table
+    publisher = db.relationship('Book', backref='publisher')
