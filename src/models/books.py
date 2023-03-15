@@ -20,8 +20,8 @@ class Book(db.Model):
 class Author(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     published_name = db.Column(db.String(), nullable=False)
-    collaboration = db.Column(db.Boolean)
-    pen_name = db.Column(db.Boolean)
+    collaboration = db.Column(db.Boolean, default=False)
+    pen_name = db.Column(db.Boolean, default=False)
     collaborator_name = db.Column(db.String())
     # Define relationship to book table
     author = db.relationship('Book', backref='author')
