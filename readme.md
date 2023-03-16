@@ -192,6 +192,7 @@ Cards were made and completed for each section of the API to reflect the require
 ![Trello Board Update - Working on Commands](./docs/Trello-coding3-commands.png)
 ![Trello Board Update - Working on Schemas](./docs/Trello-coding4-schemas.png)
 ![Trello Board Update - Working on Controllers](./docs/Trello-coding5-controllers.png)
+![Trello Board Update - Working on Controllers and Error Handling](./docs/Trello-coding6-controllers.png)
 
 ## References 
 
