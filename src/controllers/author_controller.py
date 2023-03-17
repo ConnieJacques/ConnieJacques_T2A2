@@ -59,10 +59,12 @@ def search_authors():
 def search_author(id):
     # Query database by author_id
     author = db.session.query(Author).filter_by(id=id).first()
+
+    # Return error message if the id passed is invalid
     if not author:
         return jsonify(message="Invalid query string.")
 
-    # Return authors in JSON format
+    # Return an author in JSON format
     result = author_schema.dump(author)
     return jsonify(result)
 
@@ -75,7 +77,7 @@ def search_author(id):
 @jwt_required()
 def add_author():
     try:
-        # Verify the user by getting their JWT identity querying the database with the id
+        # Verify the user by getting their JWT identity and querying the database with the id
         validate_user = get_jwt_identity()
         user = db.session.query(User).get(validate_user)
         
@@ -100,18 +102,18 @@ def add_author():
         return jsonify(message="You have added an author to the table."), 200
     # Handle errors within the request body
     except exceptions.ValidationError:
-        return abort(400, description="Error in request body. Please check for spelling mistakes and all fields are inclusion.")
+        return abort(400, description="Error in request body. Please check for spelling mistakes and that all fields are included.")
 
 
 # Allow an admin user to change data for an entry in the author table
-# Requires details of the change to a author in the request body
+# Requires details of the change to an author in the request body
 # Must include "published_name", "collaboration, collaborator_name" and "pen_name"
 @authors.route("/update/<int:author_id>", methods=["PUT"])
 @exception_handler
 @jwt_required()
 def update_author(author_id):
     try:
-        # Verify the user by getting their JWT identity querying the database with the id
+        # Verify the user by getting their JWT identity and querying the database with the id
         validate_user = get_jwt_identity()
         user = db.session.query(User).get(validate_user)
         
@@ -138,4 +140,4 @@ def update_author(author_id):
 
         return jsonify(message="You have successfully updated this author in the database."), 200
     except exceptions.ValidationError:
-        return abort(400, description="Error in request body. Please check for spelling mistakes, full data inclusion. Dates must be formatted as DD-MM-YYYY")
+        return abort(400, description="Error in request body. Please check for spelling mistakes and that all fields are included.")
