@@ -1,6 +1,5 @@
 from flask import Blueprint, jsonify, request, abort
 from app import db
-from sqlalchemy import exc, desc
 from marshmallow import exceptions
 from models.users import User
 from models.read import Read
