@@ -1,11 +1,12 @@
 from flask import Blueprint, jsonify, request, abort
 from app import db
-from sqlalchemy import exc
+from sqlalchemy import exc, desc, asc
 from marshmallow import exceptions
 from models.movies import Movie
-from schemas.book_schema import book_schema, books_schema
+from schemas.movie_schema import movie_schema, movies_schema
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from models.users import User
+from helper import exception_handler
 
 
 # Define blueprint 
@@ -15,187 +16,211 @@ movies = Blueprint('movies', __name__, url_prefix="/movies")
 # Query database to get all the movies from the movie table. 
 # Public access - no authentication required
 @movies.route("/", methods=["GET"])
+@exception_handler
 def get_all_movies():
-    try:
-        movies = Movie.query.all()
-        result = books_schema.dump(movies)
-        return jsonify(result)
-    # Return an error if the database is not connected or tables have not been created or seeded.
-    except exc.DatabaseError:
-        return abort(404, description="PostgreSQL database connection not found.")
-    except exc.NoSuchTableError:
-        return abort(404, description="Please ensure the database is seeded. Run {flask db create} then {flask db seed} on the command line to create and seed tables.")
+    movies = db.session.query(Movie).all()
+
+    # Return an error if no movies are located
+    if not movies:
+        return abort(400, description="Movie table not located.") 
+    
+    result = movies_schema.dump(movies)
+    return jsonify(result)
 
 
 # Query the movies table with a query string
 @movies.route("/search", methods=["GET"])
+@exception_handler
 def search_movies():
     try:
         # Create a list to hold the results
-        books_list = []
+        movies_list = []
 
         # Query database by movie title
         if request.args.get('title'):
-            books_list = Movie.query.filter_by(title=request.args.get('title'))
-        # Query database by length of movie
-        elif request.args.get('length'):
-            books_list = Movie.query.filter_by(length=request.args.get('length'))
-        # Query database by an author_id and return all movies written by that author
-        elif request.args.get('author_id'):
-            books_list = Movie.query.filter_by(author_id=request.args.get('author_id'))
-        # Query database by publisher_id and return all published by that publisher
-        elif request.args.get('publisher_id'):
-            books_list = Movie.query.filter_by(publisher_id=request.args.get('publisher_id'))
+            movies_list = db.session.query(Movie).filter_by(title=request.args.get('title'))      
+        # Query database by an director_id and return all movies directed by that director
+        elif request.args.get('director_id'):
+            movies_list = db.session.query(Movie).filter_by(director_id=request.args.get('director_id'))
+        # Query database by an production_company_id and return all movies made by that production company
+        elif request.args.get('production_company_id'):
+            movies_list = db.session.query(Movie).filter_by(production_company_id=request.args.get('production_company_id'))
+        # Query database by book_id and return all the movies adapted from that book
+        elif request.args.get('book_id'):
+            movies_list = db.session.query(Movie).filter_by(book_id=request.args.get('book_id'))
 
-        # Return books_list in JSON format
-        result = books_schema.dump(books_list)
+        # Return movies_list in JSON format
+        result = movies_schema.dump(movies_list)
         return jsonify(result)
-    # Catch errors if no results is returned or an invalid query is attempted
-    except exc.NoResultFound:
-        return abort(404, "No results found. Please check you are using a valid query method.")
+    # Catch errors if an invalid query is attempted
     except exc.DataError:
-        return abort(404, "No results found. Please check you are using a valid query method.")
+        return abort(400, description="Invalid parameter in query string")
     
 
-# Query the movies table with a query string
-@movies.route("/search/entry", methods=["GET"])
-def search_movie():
+# Query the movies table to return all movies sorted by length in ascending
+@movies.route("/search/length", methods=["GET"])
+@exception_handler
+def sort_movies_length():
+    movies = db.session.query(Movie).order_by(asc(Movie.length)).all()
+
+    # Return an error if no movies are located
+    if not movies:
+            return abort(400, description="Movies not found.") 
+
+    # Return movies JSON format
+    result = movies_schema.dump(movies)
+    return jsonify(result)   
+
+
+# Query the movies table and return all movies sorted by box office ranking in descending order
+@movies.route("/search/ranking", methods=["GET"])
+@exception_handler
+def sort_movies_ranking():
+    movies = db.session.query(Movie).order_by(desc(Movie.box_office_ranking)).all()
+
+    # Return an error if no movies are located
+    if not movies:
+            return abort(400, description="Movies not found.") 
+
+    # Return movies JSON format
+    result = movies_schema.dump(movies)
+    return jsonify(result)  
+
+
+# Query the movies table by movie_id
+@movies.route("/search/<int:id>", methods=["GET"])
+def search_movie_id(id):
     try:
-        # Create a list to hold the results
-        book_list = []
+        movie = db.session.query(Movie).filter_by(id=id).first()
 
-        # Query database by a movie's unique isbn number
-        if request.args.get('isbn'):
-            book_list = Movie.query.filter_by(isbn=request.args.get('isbn')).first()
-        # Query database by book_id
-        elif request.args.get('id'):
-            book_list = Movie.query.filter_by(id=request.args.get('id')).first()
+        # Return an error if no movies are located
+        if not movie:
+            return abort(400, description= "Movie could not be located in the database.")
 
-        # Return books_list in JSON format
-        result = book_schema.dump(book_list)
+        # Return movies_list in JSON format
+        result = movie_schema.dump(movie)
         return jsonify(result)
-    # Catch errors if no results is returned or an invalid query is attempted
-    except exc.NoResultFound:
-        return abort(404, "No results found. Please check you are using a valid query method.")
+        # Catch errors if no results is returned or an invalid query is attempted
     except exc.DataError:
-        return abort(404, "No results found. Please check you are using a valid query method.")
+        return abort(400, description="Invalid parameter in query string")
 
 
 # Allow an admin user to add a new movie to the movie table
-# Requires details for the new movie in the request body
-# Must include "title", "isbn", "length", "first_publication_date", "copies_published", "author_id" and "publisher_id"
+# Request body must include:
+# "title", "release_date", "length", "box_office_ranking", "book_id", "director_id", "production_company_id"
 @movies.route("/add", methods=["POST"])
+@exception_handler
 @jwt_required()
 def add_movie():
     try:
-        # Verify the user by getting their JWT identity querying the database with the id
-        verify_user = get_jwt_identity()
-        user = User.query.get(verify_user)
-
-        # If user is not already registered return an error message
+        # Verify the user by getting their JWT identity and querying the database with the id
+        validate_user = get_jwt_identity()
+        user = db.session.query(User).get(validate_user)
+        
+        # If the user's id from the token does not match any record in the database, return an error
         if not user:
-            return abort(400, description="User not found. Please login.")
+            return abort(400, description="User not found.")
         if user.admin != True:
             return abort(403, description="You are not authorized to add a movie.")
-        else:
-            # Add the new movie's details
-            movie = Movie()
-            book_fields = book_schema.load(request.json)
-            movie.title = book_fields["title"]
-            movie.isbn = book_fields["isbn"]
-            movie.length = book_fields["length"]
-            movie.first_publication_date= book_fields["first_publication_date"]
-            movie.copies_published = book_fields["copies_published"]
-            movie.author_id = book_fields["author_id"]
-            movie.publisher_id = book_fields["publisher_id"]
 
-            # Commit the new movie's details to the movie table
-            db.session.add(movie)
-            db.session.commit()
+        # Add the new movie's details
+        movie = Movie()
+        movie_fields = movie_schema.load(request.json)
+        movie.title = movie_fields["title"]
+        movie.release_date = movie_fields["release_date"]
+        movie.box_office_ranking = movie_fields["box_office_ranking"]
+        movie.book_id = movie_fields["book_id"]
+        movie.length = movie_fields["length"]
+        movie.director_id = movie_fields["director_id"]
+        movie.production_company_id = movie_fields["production_company_id"]
 
-            return jsonify(message="You have added a movie to the table."), 200
+        # Commit the new movie's details to the movie table
+        db.session.add(movie)
+        db.session.commit()
+
+        return jsonify(message="You have added a movie to the table."), 200
+    # Catch errors if an invalid query is attempted
     except exceptions.ValidationError:
-        return abort(400, description="Error in request body. Please check for spelling mistakes, full data inclusion. Dates must be formatted as DD-MM-YYYY")
-    except exc.IntegrityError:
-        return abort(400, description="ISBN number is already associated with another entry in the database. Please query the {/movie/search} route with the isbn to located existing entry.")
-    except AssertionError:
-        return abort(400, description="New entry already exist in the database.")
+        return abort(400, description="Error in request body. Please check for spelling mistakes and that all fields are included.")
+
     
-
-
 # Allow an admin user to change data for an entry in the movie table
 # Requires details of the change to a movie in the request body
-# Request body must include "title", "isbn", "length", "first_publication_date", "copies_published", "author_id" and "publisher_id"
+# Request body must include:
+# "title", "release_date", "length", "box_office_ranking", "book_id", "director_id", "production_company_id" 
 @movies.route("/update/<int:id>", methods=["PUT"])
+@exception_handler
 @jwt_required()
 def update_movie(id):
     try:
-        # Verify the user by getting their JWT identity querying the database with the id
-        verify_user = get_jwt_identity()
-        user = User.query.get(verify_user)
-
-        # If user is not already registered return an error message
+        # Verify the user by getting their JWT identity and querying the database with the id
+        validate_user = get_jwt_identity()
+        user = db.session.query(User).get(validate_user)
+        
+        # If the user's id from the token does not match any record in the database, return an error
         if not user:
-            return abort(400, description="User not found. Please login.")
+            return abort(400, description="User not found.")
         if user.admin != True:
-            return abort(403, description="You are not authorized to change the details of a movie.")
+            return abort(403, description="You are not authorized to add a movie.")
         
         # Find the movie by id
-        movie = Movie.query.filter_by(id=id).first()
+        movie = db.session.query(Movie).filter_by(id=id).first()
         if not movie:
             return abort(400, description= "Movie could not be located in the database.")
         
         # Add the new movie's details
-        book_fields = book_schema.load(request.json)
-        movie.title = book_fields["title"]
-        movie.isbn = book_fields["isbn"]
-        movie.length = book_fields["length"]
-        movie.first_publication_date= book_fields["first_publication_date"]
-        movie.copies_published = book_fields["copies_published"]
-        movie.author_id = book_fields["author_id"]
-        movie.publisher_id = book_fields["publisher_id"]
+        movie_fields = movie_schema.load(request.json)
+        movie.title = movie_fields["title"]
+        movie.release_date = movie_fields["release_date"]
+        movie.box_office_ranking = movie_fields["box_office_ranking"]
+        movie.book_id = movie_fields["book_id"]
+        movie.length = movie_fields["length"]
+        movie.director_id = movie_fields["director_id"]
+        movie.production_company_id = movie_fields["production_company_id"]
 
         # Commit the updated details to the movie table
         db.session.commit()
 
         return jsonify(message="You have successfully updated the database."), 200
+    # Catch errors if an invalid query is attempted
     except exceptions.ValidationError:
-        return abort(400, description="Error in request body. Please check for spelling mistakes, full data inclusion. Dates must be formatted as DD-MM-YYYY")
-    except exc.IntegrityError:
-        return abort(400, description="ISBN number is already associated with another entry in the database. Please query the {/movie/search} route with the isbn to located existing entry.")
-    except KeyError:
-        return abort(400, "Information incorrect in request body. Please ensure all fields are included.")
+        return abort(400, description="Error in request body. Please check for spelling mistakes and that all fields are included.")
+ 
     
-# Allow an admin user to delete an entry from the movie table
-@movies.route("/delete/<int:id>", methods=["DELETE"])
-@jwt_required()
-def delete_movie(id):
-    try:
-        # Verify the user by getting their JWT identity querying the database with the id
-        verify_user = get_jwt_identity()
-        user = User.query.get(verify_user)
+# # Allow an admin user to delete an entry from the movie table
+# @movies.route("/delete/<int:id>", methods=["DELETE"])
+# @exception_handler
+# @jwt_required()
+# def delete_movie(id):
+#     try:
+#         # Verify the user by getting their JWT identity querying the database with the id
+#         verify_user = get_jwt_identity()
+#         user = User.query.get(verify_user)
 
-        # If user is not already registered return an error message
-        if not user:
-            return abort(400, description="User not found. Please login.")
-        # Verify the user has admin privileges 
-        if user.admin != True:
-            return abort(403, description="You are not authorized to add a movie.")
+#         # If user is not already registered return an error message
+#         if not user:
+#             return abort(400, description="User not found. Please login.")
+#         # Verify the user has admin privileges 
+#         if user.admin != True:
+#             return abort(403, description="You are not authorized to add a movie.")
         
-        # Find the movie by id
-        movie = Movie.query.filter_by(id=id).first()
-        if not movie:
-            return abort(400, description= "Movie could not be located in the database.")
+#         # Find the movie by id
+#         movie = Movie.query.filter_by(id=id).first()
+#         if not movie:
+#             return abort(400, description= "Movie could not be located in the database.")
         
 
-        # Commit the updated details to the movie table
-        db.session.delete(movie)
-        db.session.commit()
+#         # Commit the updated details to the movie table
+#         db.session.delete(movie)
+#         db.session.commit()
 
-        return jsonify(message="You have successfully removed this movie from the database."), 200
-    except exceptions.ValidationError:
-        return abort(400, description="Error in request body. Please check for spelling mistakes, full data inclusion. Dates must be formatted as DD-MM-YYYY")
-    except exc.IntegrityError:
-        return abort(400, description="ISBN number is already associated with another entry in the database. Please query the {/movie/search} route with the isbn to located existing entry.")
-    except KeyError:
-        return abort(400, "Information incorrect in request body. Please ensure all fields are included.")
+#         return jsonify(message="You have successfully removed this movie from the database."), 200
+#     except exceptions.ValidationError:
+#         return abort(400, description="Error in request body. Please check for spelling mistakes, full data inclusion. Dates must be formatted as DD-MM-YYYY")
+#     except exc.IntegrityError:
+#         return abort(400, description="ISBN number is already associated with another entry in the database. Please query the {/movie/search} route with the isbn to located existing entry.")
+#     except KeyError:
+#         return abort(400, "Information incorrect in request body. Please ensure all fields are included.")
+#     # Catch errors if an invalid query is attempted
+#     except exc.DataError:
+#         return abort(400, description="Invalid parameter in query string")

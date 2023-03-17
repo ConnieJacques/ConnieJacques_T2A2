@@ -6,8 +6,7 @@ from schemas.user_schema import user_schema, users_schema
 from datetime import timedelta
 from app import bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
-from sqlalchemy import exc
-from helper import exception_handler, verify_user
+from helper import exception_handler
 
 
 # Define blueprint 
@@ -132,7 +131,7 @@ def auth_update():
         # Verify the user by getting their JWT identity querying the database with the id
         validate_user = get_jwt_identity()
         user = db.session.query(User).get(validate_user)
-
+        
         # If the user's id from the token does not match any record in the database, return an error
         if not user:
             return abort(400, description="User not found.")
