@@ -23,14 +23,25 @@ def seed_db():
 
     #Seed the user table first
     admin = User(
-        first_name = "Connie",
-        surname = "Jacques",
+        first_name = "Admin",
+        surname = "User",
         email = "fakeadmin@email.com",
         password = bcrypt.generate_password_hash("Pass1234").decode("utf-8"),
         admin = True
     )
     # Add and commit admin
     db.session.add(admin)
+    db.session.commit()
+
+    user2 = User(
+        first_name = "John",
+        surname = "Smith",
+        email = "email@email.com",
+        password = bcrypt.generate_password_hash("12345678").decode("utf-8"),
+        admin = False
+    )
+    # Add and commit admin
+    db.session.add(user2)
     db.session.commit()
 
 
