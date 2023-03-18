@@ -5,6 +5,7 @@ from marshmallow.validate import Range
 
 class WatchedSchema(ma.Schema):
     class Meta:
+        ordered = True
         # Define the fields to expose
         fields = ("id", "user_id", "movie_id", "user", "movie", "rating")
 

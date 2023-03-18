@@ -4,6 +4,7 @@ from marshmallow.validate import Length
 
 class UserSchema(ma.Schema):
     class Meta:
+        ordered = True
         # Define the fields to expose
         fields = ["id", "first_name", "surname", "email", "password", "admin"]
 
@@ -11,7 +12,7 @@ class UserSchema(ma.Schema):
         load_only = ["email", "password"]
 
     #Set the password's length to exactly 8 character's
-    password = ma.String(validate=Length(min=8))
+    password = ma.String(validate=Length(equal=8))
 
 
 user_schema = UserSchema()
