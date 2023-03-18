@@ -101,7 +101,7 @@ def get_user(email):
 
     # If the user's id from the token does not match any record in the database, return an error
     if not user:
-        return abort(401, description="User not found.")
+        return abort(400, description="User not found.")
     
     # Use the email address provided in the URL to query the database for a match
     user_email = db.session.query(User).filter(User.email == email).first()
