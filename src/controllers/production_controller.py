@@ -91,6 +91,7 @@ def add_production_company():
 # Requires details of the change in the request body
 # Must include production company "name"
 @production.route("/update/<int:id>", methods=["PUT"])
+@exception_handler
 @jwt_required()
 def update_production_company(id):
     try:

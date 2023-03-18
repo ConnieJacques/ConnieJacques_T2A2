@@ -187,40 +187,32 @@ def update_movie(id):
         return abort(400, description="Error in request body. Please check for spelling mistakes and that all fields are included.")
  
     
-# # Allow an admin user to delete an entry from the movie table
-# @movies.route("/delete/<int:id>", methods=["DELETE"])
+  
+# # Allow an admin user to delete an entry from the book table
+@movies.route("/delete/<int:movie_id>", methods=["DELETE"])
 # @exception_handler
-# @jwt_required()
-# def delete_movie(id):
-#     try:
-#         # Verify the user by getting their JWT identity querying the database with the id
-#         verify_user = get_jwt_identity()
-#         user = User.query.get(verify_user)
+@jwt_required()
+def delete_movie(movie_id):
+    # Verify the user by getting their JWT identity and querying the database with the id
+    validate_user = get_jwt_identity()
+    user = db.session.query(User).get(validate_user)
+    
+    # If the user's id from the token does not match any record in the database, return an error
+    if not user:
+        return abort(400, description="User not found.")
+    if user.admin != True:
+        return abort(403, description="You are not authorized to add an author.")
+    
+    # Find the book by id
+    movie = db.session.query(Movie).filter_by(id=movie_id).first()
 
-#         # If user is not already registered return an error message
-#         if not user:
-#             return abort(400, description="User not found. Please login.")
-#         # Verify the user has admin privileges 
-#         if user.admin != True:
-#             return abort(403, description="You are not authorized to add a movie.")
-        
-#         # Find the movie by id
-#         movie = Movie.query.filter_by(id=id).first()
-#         if not movie:
-#             return abort(400, description= "Movie could not be located in the database.")
-        
+    if not movie:
+        return abort(400, description= "Book could not be located in the database.")
+    
 
-#         # Commit the updated details to the movie table
-#         db.session.delete(movie)
-#         db.session.commit()
+    # Commit the updated details to the book table
+    db.session.delete(movie)
+    db.session.commit()
 
-#         return jsonify(message="You have successfully removed this movie from the database."), 200
-#     except exceptions.ValidationError:
-#         return abort(400, description="Error in request body. Please check for spelling mistakes, full data inclusion. Dates must be formatted as DD-MM-YYYY")
-#     except exc.IntegrityError:
-#         return abort(400, description="ISBN number is already associated with another entry in the database. Please query the {/movie/search} route with the isbn to located existing entry.")
-#     except KeyError:
-#         return abort(400, "Information incorrect in request body. Please ensure all fields are included.")
-#     # Catch errors if an invalid query is attempted
-#     except exc.DataError:
-#         return abort(400, description="Invalid parameter in query string")
+    return jsonify(message="You have successfully removed this movie and associated information from the database."), 200
+
