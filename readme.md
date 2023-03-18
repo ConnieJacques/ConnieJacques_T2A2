@@ -1,19 +1,19 @@
 # Connie Jacques - API Webserver Project
 
 
-### R1) Identification of the problem you are trying to solve by building this particular app
+### R1. Identification of the problem you are trying to solve by building this particular app
 
 This API Webserver Project will build an application to list published Stephen King books and the movie adaptations made from them. It will detail the books, including when they were first published, whether the author published them under his own name or under a pen name, the publisher, ISBN, and other interesting information. Many movies have been produced from the stories told in these books. This application will give users quick assess to information about which books have been made into movies, when, who directed them and how successful and popular they were. The users of this application will also have the ability to keep a record of the movies and books they themselves have pursued and leave a rating. Ratings are useful way for other fans of this author to prioritise the books and movies they wish to spend their time consuming next, as there is a large number of both available. As such, the problem this application attempts to solve is the need for a convenient way for fans to find out what is available and what other fans have enjoyed the most, to help them choose what to view or read next. 
 
 
-### R2) Why is it a problem that needs solving?
+### R2. Why is it a problem that needs solving?
 
 Our modern society is a busy one. Many people are working to excess, burnt out, stressed out and in need of a way to relax at the end of the day. For many, reading books and watching movies is a great way to do this; however, the volume of reading and viewing material available can be overwhelming and make choosing something to spend time on difficult. Knowing that you are a fan of an author, director or genre already can help to narrow down the choices but sometimes there are still a lot of options available and being able to choose something we are confident we will enjoy can be challenging. 
 
 This API will aid fans of Stephen King’s work, or the horror genre more broadly, to choose a way to spend their time. This author has published 65 novels, and approximately 86 movie adaptations have been made from them. A public API containing information about all of these options does not currently exist; however, it should because this would be a convenient way to access details about these books and movies, and their popularity amongst enthusiasts, would benefit fans. Plus, the additional benefit for an individual to keep track of what they have and have not read and watched previously is undeniably handy.
 
 
-### R3) Why have you chosen this database system. What are the drawbacks compared to others?
+### R3. Why have you chosen this database system. What are the drawbacks compared to others?
 
 For this project, I will be using the relational database management system PostgreSQL. 
 
@@ -41,7 +41,7 @@ Drawbacks:
 - Decreased performance as data size increases - over time, it is common for a database to become very large. As Postgres is a relational database, queries are often made across several tables. The ability to do this is a key reason for using a relational database in the first place; however, when the database is large, complex queries can have a slow response time, especially if many users are accessing the database simultaneously (IONOS 2023).
 
 
-### R4) Identify and discuss the key functionalities and benefits of an ORM
+### R4. Identify and discuss the key functionalities and benefits of an ORM
 
 Object Relational Mapping (ORM) connects an object orientated program to a relational database (Abba 2022). Relational databases have functionality to create, read, update and delete (CRUD) information stored in tables. The ability to perform these operations is a key reason for using a relational database. This functionality can be utilised by performing transitions with SQL on the command line, but it can be more convenient to have code written into a program to do this. For this reason, an ORM tool is used to allow for direct interaction between the database and an Object Orientation Programming (OOP) language (Abba 2022). 
 
@@ -57,13 +57,1701 @@ In addition to performing these key functionaries, some of the benefits of using
 - ORM tools allow for queries to be stated but not executed until they are called i.e. the logic for querying a database can be outlined in the OOP language but is not used until it is needed. This is known as lazy-loading (Imperva 2022).
 
 
-### R5) Document all endpoints for your API
+### R5. Document all endpoints for your API
 
-### R6) An ERD for your app
+This API is instructed to run on local host port 5000 by default. If you are using a different port for you local host, please update the post number by changing:
+
+`
+FLASK_RUN_PORT=5000
+`
+
+in the .flaskenv file to your chosen port number.
+
+
+Please be aware that all example images contain an alias named url, which represents:
+
+`
+http://127.0.0.1:5000
+`
+
+All end point’s described here must begin with the local host URL.
+
+
+**Home**
+*Description:*
+Home route.
+
+*Method:*
+GET
+
+*URL:*
+/
+
+*Search Parameters:*
+None
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+Welcome message
+
+*Example Request:*
+![/](./docs/endpoints/home-url.png)
+
+*Example Response:*
+![/](./docs/endpoints/home-response.png)
+
+
+**Register**
+*Description:*
+Register a new user
+
+*Method:*
+POST
+
+*URL:*
+/auth/register
+
+*Search Parameters:*
+None
+
+*Request Body Requirements:*
+first_name = user's first name. Datatype = string
+surname = user's surname. Datatype = string
+email = user's email address. Must be unique; user's cannot share an email address. Datatype = string
+password = user's desired password. Must be exactly 8 characters long. Datatype = string.
+
+![Register Request Body](./docs/endpoints/register-rbody.png)
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+Message: "You have successfully registered."
+
+*Example Request:*
+![Register](./docs/endpoints/register-url.png)
+
+*Example Response:*
+![Register](./docs/endpoints/register-response.png)
+
+**Login**
+*Description:*
+Login for an existing user. Returns a JSON Web Token that is required to access restricted routes.
+
+*Method:*
+POST
+
+*URL:*
+/auth/login
+
+*Search Parameters:*
+None
+
+*Request Body Requirements:*
+email = user's email address that was used to register. Datatype = string
+password = user's password that was used to register. Datatype = string
+
+![Login - Request Body](./docs/endpoints/login-rbody.png)
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+User's first_name and JWT token
+
+*Example Request:*
+![Login - URL](./docs/endpoints/login-url.png)
+
+*Example Response:*
+![Login - Response](./docs/endpoints/login-response.png)
+
+
+**All Users**
+*Description:*
+Allow a user with admin privileges to see all registered users.
+
+*Method:*
+GET
+
+*URL:*
+/auth/user/all
+
+*Search Parameters:*
+None
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+List of all registered users.
+User's details will contain user_id, first_name, surname and admin status.
+
+*Example Request:*
+![All Users - URL](./docs/endpoints/all-users-url.png)
+
+*Example Response:*
+![All Users - Response](./docs/endpoints/all-users-response.png)
+
+**User by Email**
+*Description:*
+Allow a user to search for their details in the database with their email address
+
+*Method:*
+GET
+
+*URL:*
+/auth/user/{email}
+
+*Search Parameters:*
+{email} = user's email address
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+User's details containing user_id, first_name, surname and admin status.
+
+*Example Request:*
+![User by Email - URL](./docs/endpoints/auth-email-url.png)
+
+*Example Response:*
+![User by Email - Response](./docs/endpoints/auth-email-response.png)
+
+**Admin Status**
+*Description:*
+Allow a user with admin privileges to change the admin status of a user
+
+*Method:*
+PUT
+
+*URL:*
+/auth/register/admin/{user_id}
+
+*Search Parameters:*
+{user_id} = user_id of the user whose admin status is to be changed.
+
+*Request Body Requirements:*
+admin = True/False. Datatype = boolean
+
+![Change Admin Status - Request Body](./docs/endpoints/admin-rbody.png)
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+Message: "Your admin privileges have changed."
+
+*Example Request:*
+![Change Admin Status - URL](./docs/endpoints/admin-url.png)
+
+*Example Response:*
+![Change Admin Status - Response](./docs/endpoints/admin-response.png)
+
+**Update User**
+*Description:*
+Allow a registered user to change their first_name, surname, email and password.
+
+*Method:*
+PUT
+
+*URL:*
+/auth/user/update
+
+*Search Parameters:*
+None
+
+*Request Body Requirements:*
+first_name = user's first name. Datatype = string
+surname = user's surname. Datatype = string
+email = user's email address. Must be unique; user's cannot share an email address. Datatype = string
+password = user's desired password. Must be exactly 8 characters long. Datatype = string.
+
+![Update User - Request Body](./docs/endpoints/update-user-rbody.png)
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+Message: "You have successfully updated your information."
+
+*Example Request:*
+![Update User - URL](./docs/endpoints/update-user-url.png)
+
+*Example Response:*
+![Update User - Response](./docs/endpoints/update-user-response.png)
+
+
+**Unregister User**
+*Description:*
+Allow users to unregister/remove themselves from the database
+
+*Method:*
+DELETE
+
+*URL:*
+/auth/user/unregister/{email}
+
+*Search Parameters:*
+{email} = the email the user is registered with
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+Message:  "User registration has been removed."
+
+*Example Request:*
+![Delete User - URL](./docs/endpoints/delete-user-url.png)
+
+*Example Response:*
+![Delete User - Response](./docs/endpoints/delete-user-response.png)
+
+**All Books**
+*Description:*
+Allow anyone to get a list of all the books in the database
+
+*Method:*
+GET
+
+*URL:*
+/books/
+
+*Search Parameters:*
+None
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+List of all the books in the database.
+Each book's details will contain book_id, title, isbn, length, first_publication_date, copies_published, nested author with published_name and nested publisher with publisher_name
+
+*Example Request:*
+![All Books](./docs/endpoints/books-url.png)
+
+*Example Response:*
+![All Books](./docs/endpoints/books-response.png)
+
+
+**Book Search - Query String**
+*Description:*
+Allow anyone to search for books in the database using a query string to search by title, length, author_id or publisher_id.
+
+*Method:*
+GET
+
+*URL:*
+/books/search{query string}
+
+*Search Parameters:*
+{query string} = a query string to match up title with book title, length with book length, author_id to match with all books containing that author_id or publisher_id to match with all books containing that publisher_id.
+
+A query string must begin with a question mark and be followed by the search parameter (e.g. title) = expected match (e.g. the title of the book). If a space is required it must be replaced with '%20'.
+
+![Book Query String - Example URL](./docs/endpoints/book-query-example-url.png)
+![Book Query String - Example URL 2](./docs/endpoints/book-query-example2.png)
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+Books matching the query string parameters.
+The book's details will contain book_id, title, isbn, length, first_publication_date, copies_published, nested author with published_name and nested publisher with publisher_name.
+
+If the query was:
+![Book Query String - Example URL 2](./docs/endpoints/book-query-example2.png)
+
+The expected output would be:
+![Book Query String - Response](./docs/endpoints/book-query-response.png)
+
+*Example Request:*
+![Book Query String - URL 2](./docs/endpoints/book-query-example-url2.png)
+
+*Example Response:*
+The expected response for the url example above is:
+![Book Query String - Response to match URL](./docs/endpoints/book-query-response2.png)
+
+**Book Search ID or ISBN - Query String**
+*Description:*
+Allow anyone to search for a book by the book_id or unique isbn.
+
+**Please note that the ISBN numbers used in the existing entries in the database are ISBN10 numbers for the first edition printing of each book.
+
+*Method:*
+GET
+
+*URL:*
+/books/search/{query string}
+
+*Search Parameters:*
+{query string} = either the book_id or ISBN number.
+
+A query string must begin with a question mark and be followed by the search parameter (e.g. isbn) = expected match (e.g. the book's isbn).
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+Books matching the query string parameters.
+The book's details will contain book_id, title, isbn, length, first_publication_date, copies_published, nested author with published_name and nested publisher with publisher_name.
+
+*Example Request:*
+![Book Query String - book_id URL](./docs/endpoints/book-search-id-url.png)
+![Book Query String - isbn URL](./docs/endpoints/book-search-isbn-url.png)
+
+*Example Response:*
+![Book Query String - Response](./docs/endpoints/book-search-response.png)
+
+
+**Add Book**
+*Description:*
+Allow a user with admin privileges to add a new book to the database
+
+*Method:*
+POST
+
+*URL:*
+/books/add
+
+*Search Parameters:*
+None
+
+*Request Body Requirements:*
+title = book title. Datatype: string
+isbn = book's unique isbn10. Datatype:string
+length = number of pages. Datatype: string
+first_publication_date = date of first publication. Datatype: DateTime. Formatted as DD/MM/YYYY inside quotation marks
+copies_published = number of copies published for the isbn number. Datatype: integer
+author_id = foreign key - author_id. Datatype: integer
+publisher_id = foreign key - publisher_id. Datatype: integer
+
+![Add Book - Request Body](./docs/endpoints/add-book-rbody.png)
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+Message: "You have added a book to the table."
+
+*Example Request:*
+![Add Book - Request](./docs/endpoints/add-book-url.png)
+
+*Example Response:*
+![Add Book - Response](./docs/endpoints/add-book-response.png)
+
+
+**Update Book**
+*Description:*
+Allow a user with admin privileges to change the details for an existing book in the database
+
+*Method:*
+PUT
+
+*URL:*
+/books/update/{book_id}
+
+*Search Parameters:*
+{book_id} = the book_id for the book whose details are to be changed
+
+*Request Body Requirements:*
+title = book title. Datatype: string
+isbn = book's unique isbn10. Datatype: string
+length = number of pages. Datatype: string
+first_publication_date = date of first publication. Datatype: DateTime. Formatted as DD/MM/YYYY inside quotation marks
+copies_published = number of copies published for the isbn number. Datatype: integer
+author_id = foreign key - author_id. Datatype: integer
+publisher_id = foreign key - publisher_id. Datatype: integer
+
+![Change Book - Request Body](./docs/endpoints/add-book-rbody.png)
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+Message: "You have successfully updated the database."
+
+*Example Request:*
+![Change Book - URL](./docs/endpoints/update-book-url.png)
+
+*Example Response:*
+![Change Book - Response](./docs/endpoints/update-book-response.png)
+
+**Delete Book**
+*Description:*
+Allow a user with admin privileges to delete an existing book from the database
+
+*Method:*
+DELETE
+
+*URL:*
+/books/delete/{book_id}
+
+*Search Parameters:*
+{book_id} = the book_id for the book to be deleted
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+Message: "You have successfully removed this book and associated information from the database."
+
+*Example Request:*
+![Delete Book - URL](./docs/endpoints/delete-book-url.png)
+
+*Example Response:*
+![Delete Book - Response](./docs/endpoints/delete-book-response.png)
+
+**All Movies**
+*Description:*
+Allow anyone to get a list of all the movies in the database
+
+*Method:*
+GET
+
+*URL:*
+/movies/
+
+*Search Parameters:*
+None
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+List of all the movies in the database.
+Each movies's details will contain movie_id, title, release_date, length in minutes, box_office_ranking, nested director with director_name, nested production company with name and nested book with the title of the book the movie was adapted from.
+
+*Example Request:*
+![All Movies](./docs/endpoints/movies-url.png)
+
+*Example Response:*
+![All Movies](./docs/endpoints/movies-response.png)
+
+
+**Movie Search - Query String**
+*Description:*
+Allow anyone to search for movies in the database using a query string to search by title, director_id, production_company_id or book_id.
+
+*Method:*
+GET
+
+*URL:*
+/movies/search{query string}
+
+*Search Parameters:*
+{query string} = a query string to match up title with movie title, director_id to match with all movies containing that director_id, production_company_id to match with all movies containing that production_company_id or book_id to match with all movies adapted from the book with that book_id.
+
+A query string must begin with a question mark and be followed by the search parameter (e.g. title) = expected match (e.g. the title of the movie). If a space is required it must be replaced with '%20'.
+
+![Movie Query String - Example URL](./docs/endpoints/movies-query-url-example.png)
+![Movie Query String - Example URL 2](./docs/endpoints/movies-query-url-example2.png)
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+Movies matching the query string parameters.
+Each movies's details will contain movie_id, title, release_date, length in minutes, box_office_ranking, nested director with director_name, nested production company with name and nested book with the title of the book the movie was adapted from.
+
+If the query was:
+![Movie Query String - Example URL 2](./docs/endpoints/movies-query-url-example2.png)
+
+The expected output would be:
+![Movie Query String - Response](./docs/endpoints/movies-query-response.png)
+
+*Example Request:*
+![Movie Query String - URL 2](./docs/endpoints/movie-query-url-3.png)
+
+*Example Response:*
+The expected response for the url example above is:
+![Movie Query String - Response to match URL](./docs/endpoints/movie-query-response2.png)
+
+
+**Movie Search - movie_id**
+*Description:*
+Allow anyone to search for movies in the database by the movie_id.
+
+*Method:*
+GET
+
+*URL:*
+/movies/search/{movie_id}
+
+*Search Parameters:*
+{movie_id} = the movie_id for the movie in the database
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+The corresponding movie for the movie_id provided.
+The movie's details will contain movie_id, title, release_date, length in minutes, box_office_ranking, nested director with director_name, nested production company with name and nested book with the title of the book the movie was adapted from.
+
+*Example Request:*
+![Movie ID - URL](./docs/endpoints/movie-id-url.png)
+
+*Example Response:*
+The expected response for the url example above is:
+![Movie ID - Response](./docs/endpoints/movie-id-response.png)
+
+**Movie Search - Length**
+*Description:*
+Allow anyone to search for all movies in the database and order them by length in descending order.
+
+*Method:*
+GET
+
+*URL:*
+/movies/search/length
+
+*Search Parameters:*
+None
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+All movies in the database in descending order from the longest to the shortest.
+The movie's details will contain movie_id, title, release_date, length in minutes, box_office_ranking, nested director with director_name, nested production company with name and nested book with the title of the book the movie was adapted from.
+
+*Example Request:*
+![Movie length - URL](./docs/endpoints/movies-length-url.png)
+
+*Example Response:*
+The expected response for the url example above is:
+![Movie length - Response](./docs/endpoints/movies-length-response.png)
+
+**Movie Search - Ranking**
+*Description:*
+Allow anyone to search for all movies in the database and order them in descending order by box office ranking.
+
+*Method:*
+GET
+
+*URL:*
+/movies/search/ranking
+
+*Search Parameters:*
+None
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+All movies in the database in order of box office ranking, from highest to lowest.
+The movie's details will contain movie_id, title, release_date, length in minutes, box_office_ranking, nested director with director_name, nested production company with name and nested book with the title of the book the movie was adapted from.
+
+*Example Request:*
+![Movie ranking - URL](./docs/endpoints/movies-ranking-url.png)
+
+*Example Response:*
+The expected response for the url example above is:
+![Movie length - Response](./docs/endpoints/movies-ranking-response.png)
+
+**Add Movie**
+*Description:*
+Allow a user with admin privileges to add a new movie to the database
+
+*Method:*
+POST
+
+*URL:*
+/movies/add
+
+*Search Parameters:*
+None
+
+*Request Body Requirements:*
+title = book title. Datatype: string
+release_date = date of release. Datatype: DateTime. Formatted as DD/MM/YYYY inside quotation marks
+box_office_ranking = international box office ranking at date of addition to database. Datatype: integer
+length = length of move in minutes. Datatype: string
+director_id = foreign key - director_id. Datatype: integer
+production_id = foreign key - production_id. Datatype:integer
+book_id = foreign key - book_id. Datatype: integer
+
+![Add Movie - Request Body](./docs/endpoints/add-movie-rbody.png)
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+Message:  "You have added a movie to the table."
+
+*Example Request:*
+![Add Movie - Request](./docs/endpoints/add-movies-url.png)
+
+*Example Response:*
+![Add Movie - Response](./docs/endpoints/add-movies-response.png)
+
+
+**Update Movie**
+*Description:*
+Allow a user with admin privileges to change the details for an existing movie in the database
+
+*Method:*
+PUT
+
+*URL:*
+/movies/update/{movie_id}
+
+*Search Parameters:*
+{movie_id} = the movie_id for the book whose details are to be changed
+
+*Request Body Requirements:*
+title = book title. Datatype: string
+release_date = date of release. Datatype: DateTime. Formatted as DD/MM/YYYY inside quotation marks
+box_office_ranking = international box office ranking at date of addition to database. Datatype: integer
+length = length of move in minutes. Datatype: string
+director_id = foreign key - director_id. Datatype: integer
+production_id = foreign key - production_id. Datatype:integer
+book_id = foreign key - book_id. Datatype: integer
+
+![Change Movie - Request Body](./docs/endpoints/add-movie-rbody.png)
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+Message:  "You have successfully updated the database."
+
+*Example Request:*
+![Update Movie - Request](./docs/endpoints/update-movie-url.png)
+
+*Example Response:*
+![Update Movie - Response](./docs/endpoints/update-movie-response.png)
+
+
+**Delete Movie**
+*Description:*
+Allow a user with admin privileges to delete an existing movie from the database
+
+*Method:*
+DELETE
+
+*URL:*
+/movies/delete/{movie_id}
+
+*Search Parameters:*
+{movie_id} = the movie_id for the movie to be deleted
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+Message: "You have successfully removed this movie and associated information from the database."
+
+*Example Request:*
+![Delete Movie - URL](./docs/endpoints/delete-movie-url.png)
+
+*Example Response:*
+![Delete Movie - Response](./docs/endpoints/delete-movie-response.png)
+
+
+**All Authors**
+*Description:*
+Allow anyone to get a list of all the authors in the database
+
+*Method:*
+GET
+
+*URL:*
+/authors/
+
+*Search Parameters:*
+None
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+List of all the authors in the database.
+Each authors's details will contain author_id, title, pen_name, collaboration and collaborator_name
+
+*Example Request:*
+![All Authors](./docs/endpoints/authors-url.png)
+
+*Example Response:*
+![All Authors](./docs/endpoints/authors-response.png)
+
+**Author Search - Query String**
+*Description:*
+Allow anyone to search for authors in the database using a query string to search by published_name, collaboration (true/false), pen_name (true/false) or collaborator_name.
+
+*Method:*
+GET
+
+*URL:*
+/authors/search{query string}
+
+*Search Parameters:*
+{query string} = a query string to match up title with published_name, collaboration (true/false), pen_name (true/false) or the name of a collaborator with collaborator_name.
+
+A query string must begin with a question mark and be followed by the search parameter (e.g. title) = expected match (e.g. the title of the movie). If a space is required it must be replaced with '%20'.
+
+![Author Query String - Example URL](./docs/endpoints/author-query-url.png)
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+Movies matching the query string parameters.
+Each movies's details will contain movie_id, title, release_date, length in minutes, box_office_ranking, nested director with director_name, nested production company with name and nested book with the title of the book the movie was adapted from.
+
+If the query was:
+![Author Query String - Example URL 2](./docs/endpoints/author-query-url.png)
+
+The expected output would be:
+![Author Query String - Response](./docs/endpoints/author-query-result.png)
+
+*Example Request:*
+![Author Query String - URL 2](./docs/endpoints/author-query-url2.png)
+
+*Example Response:*
+The expected response for the url example above is:
+![Author Query String - Response to match URL](./docs/endpoints/author-query-result2.png)
+
+
+**Author Search - author_id**
+*Description:*
+Allow anyone to search for an author in the database by their author_id.
+
+*Method:*
+GET
+
+*URL:*
+/authors/search/{author_id}
+
+*Search Parameters:*
+{author_id} = the author_id for the author in the database
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+The corresponding author for the author_id provided.
+The authors's details will contain author_id, title, pen_name, collaboration and collaborator_name
+
+*Example Request:*
+![Author ID - URL](./docs/endpoints/author-id-url.png)
+
+*Example Response:*
+The expected response for the url example above is:
+![Author ID - Response](./docs/endpoints/author-query-result2.png)
+
+
+**Add Author**
+*Description:*
+Allow a user with admin privileges to add a new author to the database
+
+*Method:*
+POST
+
+*URL:*
+/authors/add
+
+*Search Parameters:*
+None
+
+*Request Body Requirements:*
+published_name = published name of the author. Datatype: string
+pen_name = whether a name was used or not. Datatype: boolean
+collaborator_name = name of the collaborator or null. Datatype: string
+collaboration = whether the book was written with a collaborator or not. Datatype: boolean
+
+![Add Author - Request Body](./docs/endpoints/new-author-rbody.png)
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+Message:  "You have added an author to the table."
+
+*Example Request:*
+![Add Author - Request](./docs/endpoints/new-author-url.png)
+
+*Example Response:*
+![Add Author - Response](./docs/endpoints/new-author-response.png)
+
+
+**Update Author**
+*Description:*
+Allow a user with admin privileges to change the details for an existing author in the database
+
+*Method:*
+PUT
+
+*URL:*
+/authors/update/{author_id}
+
+*Search Parameters:*
+{author_id} = the author_id for the author whose details are to be changed
+
+*Request Body Requirements:*
+published_name = published name of the author. Datatype: string
+pen_name = whether a name was used or not. Datatype: boolean
+collaborator_name = name of the collaborator or null. Datatype: string
+collaboration = whether the book was written with a collaborator or not. Datatype: boolean
+
+![Change Author - Request Body](./docs/endpoints/new-author-rbody.png)
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+Message:  "You have successfully updated this author in the database."
+
+*Example Request:*
+![Update Author - Request](./docs/endpoints/update-author-url.png)
+
+*Example Response:*
+![Update Author - Response](./docs/endpoints/update-author-response.png)
+
+**All Publishers**
+*Description:*
+Allow anyone to get a list of all the publishers in the database
+
+*Method:*
+GET
+
+*URL:*
+/publishers/
+
+*Search Parameters:*
+None
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+List of all the publishers in the database.
+Each publishers's details will contain publisher_id and publisher_name
+
+*Example Request:*
+![All Publishers](./docs/endpoints/publishers-url.png)
+
+*Example Response:*
+![All Publishers](./docs/endpoints/publishers-response.png)
+
+
+**Publishers Search - publisher_name**
+*Description:*
+Allow anyone to search for publishers in the database using the name of the publisher
+
+*Method:*
+GET
+
+*URL:*
+/publishers/search/name/{publisher_name}
+
+*Search Parameters:*
+{publisher_name} = name of the publisher in the database.
+
+If a space is required it must be replaced with '%20'.
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+Publishers matching the publisher_name.
+The publishers's details will contain the publisher_name and publisher_id.
+
+*Example Request:*
+![Publisher Name - URL](./docs/endpoints/publisher-name-url.png)
+
+*Example Response:*
+The expected response for the url example above is:
+![Publisher Name - Response](./docs/endpoints/publisher-name-response.png)
+
+
+**Publisher Search - publisher_id**
+*Description:*
+Allow anyone to search for a publisher in the database by their publisher_id.
+
+*Method:*
+GET
+
+*URL:*
+/publishers/search/{publisher_id}
+
+*Search Parameters:*
+{publisher_id} = the publisher_id for the publisher in the database
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+The corresponding publisher for the publisher_id provided.
+The publishers's details will container the publisher_name and publisher_id.
+
+*Example Request:*
+![Publisher ID - URL](./docs/endpoints/publisher-id-url.png)
+
+*Example Response:*
+![Publisher ID - Response](./docs/endpoints/publisher-name-response.png)
+
+
+**Add Publisher**
+*Description:*
+Allow a user with admin privileges to add a new publisher to the database
+
+*Method:*
+POST
+
+*URL:*
+/publishers/add
+
+*Search Parameters:*
+None
+
+*Request Body Requirements:*
+publisher_name = name of the publisher. Datatype: string
+
+![Add Publisher - Request Body](./docs/endpoints/publisher-add-rbody.png)
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+Message:  "You have added a publisher to the table."
+
+*Example Request:*
+![Add Publisher - Request](./docs/endpoints/publishser-add-url.png)
+
+*Example Response:*
+![Add Publisher - Response](./docs/endpoints/publisher-add-response.png)
+
+
+**Update Publisher**
+*Description:*
+Allow a user with admin privileges to change the details for an existing publisher in the database
+
+*Method:*
+PUT
+
+*URL:*
+/publishers/update/{publisher_id}
+
+*Search Parameters:*
+{publisher_id} = the publisher_id for the publisher whose details are to be changed
+
+*Request Body Requirements:*
+publisher_name = name of the publisher. Datatype: string
+
+![Change Publisher - Request Body](./docs/endpoints/publisher-add-rbody.png)
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+Message:  "You have successfully updated the database."
+
+*Example Request:*
+![Update Publisher - Request](./docs/endpoints/publisher-update-url.png)
+
+*Example Response:*
+![Update Publisher - Response](./docs/endpoints/publisher-update-response.png)
+
+
+**All Directors**
+*Description:*
+Allow anyone to get a list of all the directors in the database
+
+*Method:*
+GET
+
+*URL:*
+/directors/
+
+*Search Parameters:*
+None
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+List of all the directors in the database.
+Each directors's details will contain director_id and director_name
+
+*Example Request:*
+![All Directors](./docs/endpoints/directors-url.png)
+
+*Example Response:*
+![All Directors](./docs/endpoints/directors-response.png)
+
+
+**Directors Search - director_name**
+*Description:*
+Allow anyone to search for directors in the database using the name of the director
+
+*Method:*
+GET
+
+*URL:*
+/directors/search/name/{director_name}
+
+*Search Parameters:*
+{director_name} = name of the director in the database.
+
+If a space is required it must be replaced with '%20'.
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+Directors matching the director_name.
+The directors's details will container the director_name and director_id.
+
+*Example Request:*
+![Director Name - URL](./docs/endpoints/directors-name-url.png)
+
+*Example Response:*
+The expected response for the url example above is:
+![Director Name - Response](./docs/endpoints/directors-name-response.png)
+
+
+**Director Search - director_id**
+*Description:*
+Allow anyone to search for a publisher in the database by their director_id.
+
+*Method:*
+GET
+
+*URL:*
+/directors/search/{director_id}
+
+*Search Parameters:*
+{director_id} = the director_id for the director in the database
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+The corresponding director for the director_id provided.
+The director's details will contain the director_name and director_id.
+
+*Example Request:*
+![Director ID - URL](./docs/endpoints/director-id-url.png)
+
+*Example Response:*
+![Director ID - Response](./docs/endpoints/directors-name-response.png)
+
+
+**Add Director**
+*Description:*
+Allow a user with admin privileges to add a new director to the database
+
+*Method:*
+POST
+
+*URL:*
+/directors/add
+
+*Search Parameters:*
+None
+
+*Request Body Requirements:*
+director_name = name of the director. Datatype: string
+
+![Add Director - Request Body](./docs/endpoints/director-add-rbody.png)
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+Message:  "You have added a director to the table."
+
+*Example Request:*
+![Add Director - Request](./docs/endpoints/director-add-url.png)
+
+*Example Response:*
+![Add Director - Response](./docs/endpoints/director-add-response.png)
+
+
+**Update Director**
+*Description:*
+Allow a user with admin privileges to change the details for an existing director in the database
+
+*Method:*
+PUT
+
+*URL:*
+/directors/update/{director_id}
+
+*Search Parameters:*
+{director_id} = the director_id for the director whose details are to be changed
+
+*Request Body Requirements:*
+director_name = name of the director. Datatype: string
+
+![Change Author - Request Body](./docs/endpoints/publisher-add-rbody.png)
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+Message:  "You have successfully updated the database."
+
+*Example Request:*
+![Update Director - Request](./docs/endpoints/director-update-url.png)
+
+*Example Response:*
+![Update Director - Response](./docs/endpoints/director-update-response.png)
+
+
+**All Production Companies**
+*Description:*
+Allow anyone to get a list of all the production companies in the database
+
+*Method:*
+GET
+
+*URL:*
+/production/
+
+*Search Parameters:*
+None
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+List of all the production companies in the database.
+Each production companies's details will contain production_id and production_name
+
+*Example Request:*
+![All Production Companies](./docs/endpoints/production-url.png)
+
+*Example Response:*
+![All Production Companies](./docs/endpoints/production-response.png)
+
+
+**Production Company Search - production_name**
+*Description:*
+Allow anyone to search for production companies in the database using the name of the production company
+
+*Method:*
+GET
+
+*URL:*
+/production/search/name/{production_name}
+
+*Search Parameters:*
+{production_name} = name of the production company in the database.
+
+If a space is required it must be replaced with '%20'.
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+Production companies matching the production_id.
+The production companies details will contain the production_name and production_id.
+
+*Example Request:*
+![Production Company Name - URL](./docs/endpoints/production-name-url.png)
+
+*Example Response:*
+The expected response for the url example above is:
+![Production Company Name - Response](./docs/endpoints/production-name-response.png)
+
+
+**Production Company Search - production_id**
+*Description:*
+Allow anyone to search for a production company in the database by their production_id.
+
+*Method:*
+GET
+
+*URL:*
+/production/search/{production_id}
+
+*Search Parameters:*
+{production_id} = the production_id for the production company in the database
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+The corresponding production company for the production_id provided.
+The production companies details will contain the production_name and production_id.
+
+*Example Request:*
+![Production ID - URL](./docs/endpoints/production-id-url.png)
+
+*Example Response:*
+![Production ID - Response](./docs/endpoints/production-id-response.png)
+
+
+**Add Production Company**
+*Description:*
+Allow a user with admin privileges to add a new production company to the database
+
+*Method:*
+POST
+
+*URL:*
+/production/add
+
+*Search Parameters:*
+None
+
+*Request Body Requirements:*
+name = name of the production company. Datatype: string
+
+![Add Production Company - Request Body](./docs/endpoints/add-production-rbody.png)
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+Message:  "You have added a production company to the table."
+
+*Example Request:*
+![Add Production Company - Request](./docs/endpoints/add-production-url.png)
+
+*Example Response:*
+![Add Production Company - Response](./docs/endpoints/add-production-response.png)
+
+
+**Update Production Company**
+*Description:*
+Allow a user with admin privileges to change the details for an existing production company in the database
+
+*Method:*
+PUT
+
+*URL:*
+/production/update/{production_id}
+
+*Search Parameters:*
+{production_id} = the production_id for the production company whose details are to be changed
+
+*Request Body Requirements:*
+name = name of the production company. Datatype: string
+
+![Change Production Company - Request Body](./docs/endpoints/update-response-rbody.png)
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+Message:  "You have successfully updated the database."
+
+*Example Request:*
+![Update Production - Request](./docs/endpoints/update-prodction-url.png)
+
+*Example Response:*
+![Update Production Company - Response](./docs/endpoints/update-production-response.png)
+
+
+**Read - Average Rating**
+*Description:*
+Allow anyone to get the average rating of a book from the database by querying the read table.
+
+*Method:*
+GET
+
+*URL:*
+/read/rating/{book_id}
+
+*Search Parameters:*
+{book_id} = the book_id of the book you wish see the average rating for.
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+Message: "The average rating of this book is: {average rating}"
+
+*Example Request:*
+![Average Rating](./docs/endpoints/read-rating-url.png)
+
+*Example Response:*
+![Average Rating](./docs/endpoints/read-rating-response.png)
+
+**User's Read Ratings**
+*Description:*
+Allow a user to get a list of the books they have reviewed.
+
+*Method:*
+GET
+
+*URL:*
+/read/{user_id}
+
+*Search Parameters:*
+{user_id} = the user_id of the user wishing to their reviews
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+List of all the user's reviews from the read table
+Each review's details will contain the read_id, rating, nested book with title and nested user with first_name and surname
+
+*Example Request:*
+![Read ID](./docs/endpoints/read-id-url.png)
+
+*Example Response:*
+![Read ID](./docs/endpoints/read-id-response.png)
+
+
+**Add Read Rating**
+*Description:*
+Allow a user with admin privileges to add a new review to the database
+
+*Method:*
+POST
+
+*URL:*
+/read/add
+
+*Search Parameters:*
+None
+
+*Request Body Requirements:*
+book_id = book_id for the book to review. Datatype: integer
+rating = user's rating for the book. Datatype: integer
+
+![Add Review - Request Body](./docs/endpoints/rating-add-rbody.png)
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+Message:  "You have added a review."
+
+*Example Request:*
+![Add Review - Request](./docs/endpoints/rating-add-url.png)
+
+*Example Response:*
+![Add Review - Response](./docs/endpoints/rating-add-response.png)
+
+**Update Read Rating**
+*Description:*
+Allow a user to the change the rating in one of their own reviews
+
+*Method:*
+PUT
+
+*URL:*
+/read/update/{read_id}
+
+*Search Parameters:*
+{read_id} = the read_id for the review the user wishes to change
+ 
+*Request Body Requirements:*
+rating = user's rating for the book. Datatype: integer
+
+![Update Review - Request Body](./docs/endpoints/update-review-rbody.png)
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+Message:  "You have successfully updated your rating for this book."
+
+*Example Request:*
+![Update Review - Request](./docs/endpoints/update-review-url.png)
+
+*Example Response:*
+![Update Review - Response](./docs/endpoints/update-review-response.png)
+
+**Delete Read Review**
+*Description:*
+Allow a user to the delete one of their own reviews
+
+*Method:*
+DELETE
+
+*URL:*
+/read/delete/{read_id}
+
+*Search Parameters:*
+{read_id} = the read_id for the review to be deleted
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+Message: "You have successfully deleted your review for this book."
+
+*Example Request:*
+![Delete Review - URL](./docs/endpoints/delete-review-url.png)
+
+*Example Response:*
+![Delete REview - Response](./docs/endpoints/delete-review-response.png)
+
+**Watched - Average Rating**
+*Description:*
+Allow anyone to get the average rating of a movie from the database by querying the watched table.
+
+*Method:*
+GET
+
+*URL:*
+/watched/rating/{movie_id}
+
+*Search Parameters:*
+{movie_id} = the movie_id of the movie you wish see the average rating for.
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+None
+
+*Expected Response:*
+Message: "The average rating of this movie is: {average rating}"
+
+*Example Request:*
+![Average Rating](./docs/endpoints/watched-rating-url.png)
+
+*Example Response:*
+![Average Rating](./docs/endpoints/watched-rating-response.png)
+
+
+**User's Watched Ratings**
+*Description:*
+Allow a user to get a list of the movies they have reviewed.
+
+*Method:*
+GET
+
+*URL:*
+/watched/{user_id}
+
+*Search Parameters:*
+{user_id} = the user_id of the user wishing to their reviews
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+List of all the user's reviews from the watched table
+Each review's details will contain the watched_id, rating, nested movie with title and nested user with first_name and surname
+
+*Example Request:*
+![Watched ID](./docs/endpoints/watched-id-url.png)
+
+*Example Response:*
+![Watched ID](./docs/endpoints/watched-id-response.png)
+
+
+**Add Watched Rating**
+*Description:*
+Allow a user with admin privileges to add a new review to the database
+
+*Method:*
+POST
+
+*URL:*
+/watched/add
+
+*Search Parameters:*
+None
+
+*Request Body Requirements:*
+movie_id = movie_id for the movie to review. Datatype: integer
+rating = user's rating for the book. Datatype: integer
+
+![Add Review - Request Body](./docs/endpoints/watched-add-rbody.png)
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+Message:  "You have added a review."
+
+*Example Request:*
+![Add Review - Request](./docs/endpoints/watched-add-url.png)
+
+*Example Response:*
+![Add Review - Response](./docs/endpoints/rating-add-response.png)
+
+**Update Watched Rating**
+*Description:*
+Allow a user to the change the rating in one of their own reviews
+
+*Method:*
+PUT
+
+*URL:*
+/watched/update/{watched_id}
+
+*Search Parameters:*
+{watched_id} = the watched_id for the review the user wishes to change
+ 
+*Request Body Requirements:*
+rating = user's rating for the movie. Datatype: integer
+
+![Update Review - Request Body](./docs/endpoints/update-review-rbody.png)
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+Message:  "You have successfully updated your rating for this movie."
+
+*Example Request:*
+![Update Review - Request](./docs/endpoints/watched-update-url.png)
+
+*Example Response:*
+![Update Review - Response](./docs/endpoints/watched-update-response.png)
+
+**Delete Watched Review**
+*Description:*
+Allow a user to the delete one of their own reviews
+
+*Method:*
+DELETE
+
+*URL:*
+/watched/delete/{watched_id}
+
+*Search Parameters:*
+{watched_id} = the watched_id for the review to be deleted
+
+*Request Body Requirements:*
+None
+
+*Authentication Required:*
+Bearer token required
+Type: JWT
+
+*Expected Response:*
+Message: "You have successfully deleted your review for this movie."
+
+*Example Request:*
+![Delete Review - URL](./docs/endpoints/watched-delete-url.png)
+
+*Example Response:*
+![Delete REview - Response](./docs/endpoints/watched-delete-response.png)
+
+### R6. An ERD for your app
 
 ![Stephen King DB ERD](./docs/stephen_king_db_erd.jpg)
 
-### R7) Detail any third party services that your app will use
+### R7. Detail any third party services that your app will use
 
 Flask: This application will be built on Flask, which is a python web application framework and is imported as a python module. Flask is a Webserver Gateway Interface (WSGI), meaning that it controls communication between servers and our python application (Python Basics 2021). 
 
@@ -84,9 +1772,9 @@ os: The os library provides various operating system dependent functionalities. 
 DateTime: The python package DateTime is used to create datetime objects and format them (Python Software Foundation 2023). The timedelta() function from the DateTime  library will be used to set and track expiry times for JSON Web Tokens used in our application. 
 
 
-### R8) Describe your projects models in terms of the relationships they have with each other
+### R8. Describe your projects models in terms of the relationships they have with each other
 
-### R9) Discuss the database relations to be implemented in your application
+### R9. Discuss the database relations to be implemented in your application
 
 Users:
 
@@ -152,11 +1840,13 @@ ProductionCompanies:
 
 - ProductionCompanies has a one to many relationship with Movies. One production company can produce many movies.
 
-### R10) Describe the way tasks are allocated and tracked in your project
+### R10. Describe the way tasks are allocated and tracked in your project
 
 To structure the implementation of each step in undertaking this assessment, I have used a Trello board in the kanban project management style to help me visualise the steps I need to complete and manage my time in doing so.
 
-**My Trello board is available here:** 
+**My Trello board is available here:**
+
+[Trello Board](https://trello.com/b/LinWh3iO/api-webserver-project)
 
 All tasks are allocated to myself, as this is an individual project.There are four categories: To Do, In Progress, Completed and Nice to Have. Each card contains a step to undertake, details of the actions to be completed, and a timeframe. The timeframe for completing each step is represented with a coloured label. The key for the labels is as follows:
 
