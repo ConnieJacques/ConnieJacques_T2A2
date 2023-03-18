@@ -9,11 +9,13 @@ class Movie(db.Model):
     box_office_ranking = db.Column(db.Integer, nullable=False)
     # Define Foreign Keys
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
+    # book_id = db.Column(db.Integer, db.ForeignKey('book.id'))
     director_id = db.Column(db.Integer, db.ForeignKey('director.id'), nullable=False)
     production_company_id = db.Column(db.Integer, db.ForeignKey('production_company.id'), nullable=False)
     # Define relationships with watched and book tables
-    watched = db.relationship('Watched', backref='movie')
-    book = db.relationship('Book', backref='book')
+    watched = db.relationship('Watched', backref='movie', cascade="all, delete-orphan")
+    book = db.relationship('Book', overlaps="movie,movie", single_parent=True, cascade="all, delete-orphan")
+
 
 # Define Director model
 class Director(db.Model):
