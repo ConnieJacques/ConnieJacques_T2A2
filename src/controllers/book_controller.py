@@ -61,7 +61,7 @@ def search_books():
     
 
 # Query the books table with a query string
-@books.route("/searchby", methods=["GET"])
+@books.route("/search/", methods=["GET"])
 @exception_handler
 def search_book():
     try:
@@ -119,6 +119,8 @@ def add_book():
         return jsonify(message="You have added a book to the table."), 200
     except exceptions.ValidationError:
         return abort(400, description="Error in request body. Please check for spelling mistakes and that all fields are included.")
+    except exc.IntegrityError:
+        return abort(400, description="ISBN number is already associated with another entry in the database.")
     
 
 # Allow an admin user to change data for an entry in the book table
@@ -160,38 +162,34 @@ def update_book(book_id):
         return jsonify(message="You have successfully updated the database."), 200
     except exceptions.ValidationError:
          return abort(400, description="Error in request body. Please check for spelling mistakes and that all fields are included.")
+    except exc.IntegrityError:
+        return abort(400, description="ISBN number is already associated with another entry in the database.")
 
     
 # # Allow an admin user to delete an entry from the book table
-# @books.route("/delete/<int:id>", methods=["DELETE"])
-# @jwt_required()
-# def delete_book(id):
-#     try:
-#         # Verify the user by getting their JWT identity querying the database with the id
-#         verify_user = get_jwt_identity()
-#         user = User.query.get(verify_user)
+@books.route("/delete/<int:book_id>", methods=["DELETE"])
+# @exception_handler
+@jwt_required()
+def delete_book(book_id):
+    # Verify the user by getting their JWT identity and querying the database with the id
+    validate_user = get_jwt_identity()
+    user = db.session.query(User).get(validate_user)
+    
+    # If the user's id from the token does not match any record in the database, return an error
+    if not user:
+        return abort(400, description="User not found.")
+    if user.admin != True:
+        return abort(403, description="You are not authorized to add an author.")
+    
+    # Find the book by id
+    book = db.session.query(Book).filter_by(id=book_id).first()
 
-#         # If user is not already registered return an error message
-#         if not user:
-#             return abort(400, description="User not found. Please login.")
-#         # Verify the user has admin privileges 
-#         if user.admin != True:
-#             return abort(403, description="You are not authorized to add a book.")
-        
-#         # Find the book by id
-#         book = Book.query.filter_by(id=id).first()
-#         if not book:
-#             return abort(400, description= "Book could not be located in the database.")
-        
+    if not book:
+        return abort(400, description= "Book could not be located in the database.")
+    
 
-#         # Commit the updated details to the book table
-#         db.session.delete(book)
-#         db.session.commit()
+    # Commit the updated details to the book table
+    db.session.delete(book)
+    db.session.commit()
 
-#         return jsonify(message="You have successfully removed this book from the database."), 200
-#     except exceptions.ValidationError:
-#         return abort(400, description="Error in request body. Please check for spelling mistakes, full data inclusion. Dates must be formatted as DD-MM-YYYY")
-#     except exc.IntegrityError:
-#         return abort(400, description="ISBN number is already associated with another entry in the database. Please query the {/book/search} route with the isbn to located existing entry.")
-#     except KeyError:
-#         return abort(400, "Information incorrect in request body. Please ensure all fields are included.")
+    return jsonify(message="You have successfully removed this book and associated information from the database."), 200

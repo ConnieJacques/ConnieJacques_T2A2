@@ -13,7 +13,7 @@ from helper import exception_handler
 authors = Blueprint('authors', __name__, url_prefix="/authors")
 
 
-# Query database to get all the authors from the author table. 
+# Query database to get all the authors from the author table
 # Public access - no authentication required
 @authors.route("/", methods=["GET"])
 @exception_handler
@@ -43,12 +43,14 @@ def search_authors():
         # Query database by the name of a collaborator
         elif request.args.get('collaborator_name'):
             authors_list = db.session.query(Author).filter_by(collaborator_name=request.args.get('collaborator_name'))
+        # Return an error if the query string is invalid
         elif authors_list == []:
             return abort(400, description="Missing or invalid query string.")
 
         # Return authors_list in JSON format
         result = authors_schema.dump(authors_list)
         return jsonify(result)
+    # Catch errors if an invalid query is attempted
     except exc.DataError:
         return abort(400, description="Invalid parameter in query string")
 
@@ -71,7 +73,8 @@ def search_author(id):
 
 # Allow an admin user to add a new author to the author table
 # Requires details for the new author in the request body
-# Must include "published_name", "collaboration, collaborator_name" and "pen_name"
+# Request body must include:
+# "published_name", "collaboration, collaborator_name" and "pen_name"
 @authors.route("/add", methods=["POST"])
 @exception_handler
 @jwt_required()
@@ -107,7 +110,8 @@ def add_author():
 
 # Allow an admin user to change data for an entry in the author table
 # Requires details of the change to an author in the request body
-# Must include "published_name", "collaboration, collaborator_name" and "pen_name"
+# Request body must include:
+# "published_name", "collaboration, collaborator_name" and "pen_name"
 @authors.route("/update/<int:author_id>", methods=["PUT"])
 @exception_handler
 @jwt_required()
@@ -138,6 +142,6 @@ def update_author(author_id):
         # Commit the updated details to the author table
         db.session.commit()
 
-        return jsonify(message="You have successfully updated this author in the database."), 200
+        return jsonify(message="You have successfully updated this author to the database."), 200
     except exceptions.ValidationError:
         return abort(400, description="Error in request body. Please check for spelling mistakes and that all fields are included.")
