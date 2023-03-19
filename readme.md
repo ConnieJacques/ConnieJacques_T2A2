@@ -1,6 +1,115 @@
 # Connie Jacques - API Webserver Project
 
 
+### Database Set Up and Flask Instructions
+
+This API has been built using Python3 on a Flask framework. The database used is PostgreSQL. Postgres must be installed and the database set up before the API can be used on a local host server. 
+
+It is assumed that the user has PostgreSQL and psycopg2 installed and is familiar with its usage.
+
+PostgreSQL runs on port 5432 by default. If you have PostgreSQL running on a different port, you will need to change the specified port in the DATABASE_URL statement in the .env file.
+
+`
+DATABASE_URL="postgresql+psycopg2://db_dev:123456@localhost:5432/stephen_king_db"
+`
+
+Change *localhost:5432* to the port number you are using for PostgreSQL, if different.
+
+
+Create the database by executing the following command on the PostgreSQL command line:
+
+`
+CREATE DATABASE stephen_king_db;
+`
+
+If you wish to name the database something else, please be sure to change the database name in the .env file. The database is named in this file (as shown below) as stephen_king_db but it can be altered by changing the name to match your newly created database in PostgreSQL. 
+
+`
+DATABASE_URL="postgresql+psycopg2://db_dev:123456@localhost:5432/stephen_king_db"
+`
+
+Change *stephen_king_db* to your match the name you gave the new database in PostgreSQL.
+
+Create a user for the database by executing the following command on the postgreSQL command line:
+
+`
+CREATE USER db_dev WITH PASSWORD '123456';
+`
+
+If you have an existing user that you wish to use, please change the DATABASE_URL statement in the .env file to reflect this. 
+
+`
+DATABASE_URL="postgresql+psycopg2://db_dev:123456@localhost:5432/stephen_king_db"
+`
+
+Change *db_dev:123456* to the name and password of the user you wish to use.
+
+To grant privileges to the user to perform CRUD functionality on the new database, execute the following command on the PostgreSQL command line: 
+
+`
+GRANT ALL PRIVILEGES ON DATABASE stephen_king_db TO db_dev;
+`
+
+If your database or username is different please alter the command to reflect this.
+
+Once this has been done, the database is ready to use.
+
+Next, navigate to your copy of the *ConnieJacques_T2A2* directory on the terminal command line. Move into the folder and move again into the *src* directory.
+
+Create a virtual environment by executing the following command on the command line:
+
+`
+python3 -m venv venv
+`
+
+Activate the virtual environment. This can be done on a POSIX computer by executing the following command on the command line:
+
+`
+source venv/bin/activate
+`
+
+Install the application dependencies by executing the following command on the command line:
+
+`
+pip3 install -r requirements.txt
+`
+
+You can now create and seed the tables for the database by executing the following on the command line:
+
+Create tables:
+
+`
+flask db create
+`
+
+Seed tables:
+
+`
+flask db seed
+`
+
+And delete tables, if needed:
+
+`
+flask db drop
+`
+
+The default local host server port is used for this application. If you have your local host running on a different port, please change:
+
+`
+FLASK_RUN_PORT=5000
+`
+
+in the .flaskenv file to reflect this.
+
+As the application is set up to use .env and .flaskenv files to access environmental variables, and the main file is named *app.py*, Flask will run if the following is executed on the command line:
+
+`
+flask run
+`
+
+You are now ready to use the API. Please see the endpoint documentation below for detailed instructions.
+
 ### R1. Identification of the problem you are trying to solve by building this particular app
 
 This API Webserver Project will build an application to list published Stephen King books and the movie adaptations made from them. It will detail the books, including when they were first published, whether the author published them under his own name or under a pen name, the publisher, ISBN, and other interesting information. Many movies have been produced from the stories told in these books. This application will give users quick assess to information about which books have been made into movies, when, who directed them and how successful and popular they were. The users of this application will also have the ability to keep a record of the movies and books they themselves have pursued and leave a rating. Ratings are useful way for other fans of this author to prioritise the books and movies they wish to spend their time consuming next, as there is a large number of both available. As such, the problem this application attempts to solve is the need for a convenient way for fans to find out what is available and what other fans have enjoyed the most, to help them choose what to view or read next. 
@@ -2079,6 +2188,7 @@ ProductionCompanies:
 
 - ProductionCompanies has a one to many relationship with Movies. One production company can produce many movies.
 
+
 ### R10. Describe the way tasks are allocated and tracked in your project
 
 To structure the implementation of each step in undertaking this assessment, I have used a Trello board in the kanban project management style to help me visualise the steps I need to complete and manage my time in doing so.
@@ -2122,6 +2232,11 @@ Cards were made and completed for each section of the API to reflect the require
 ![Trello Board Update - Working on Schemas](./docs/Trello-coding4-schemas.png)
 ![Trello Board Update - Working on Controllers](./docs/Trello-coding5-controllers.png)
 ![Trello Board Update - Working on Controllers and Error Handling](./docs/Trello-coding6-controllers.png)
+![Trello Board Update - Controllers and Error Handling Completed](./docs/trello-update-controllers-errors.png)
+
+Cards were marked off after coding was "completed" and the last of the documentation for the README was added
+![Trello Board Update - R5 and R8 Underway](./docs/readme-finalisation.png)
+![Trello Board Update - Endpoints and Model Relationships Completed](./docs/endpoints-relations-completed.png)
 
 ## References 
 
