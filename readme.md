@@ -2,7 +2,7 @@
 
 
 Github repository is available at: 
-[Github Repository]
+[Github Repository](https://github.com/ConnieJacques/ConnieJacques_T2A2)
 
 ### Database Set Up and Flask Instructions
 
