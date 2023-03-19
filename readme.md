@@ -2468,6 +2468,7 @@ The User model holds a user’s id, first name, surname, unique email address, p
 
 `
 watched = db.relationship(‘Watched’, backref=‘user’, cascade=‘all, delete’)
+
 read = db.relationship(‘Read’, backref=‘user’, cascade=‘all, delete’)
 `
 
@@ -2476,6 +2477,7 @@ The Read model holds a user’s rating for a book and the id. The book_id from t
 
 `
 book_id = db.Column(db.Integer, db.ForeignKey(‘book.id’), nullable=False)
+
 user_id = db.Column(db.Integer, db.ForeignKey(‘user.id’), nullable=False)
 `
 
@@ -2484,6 +2486,7 @@ The Book models holds a book’s id, title, unique isbn number, length in pages,
 
 `
 read = db.relationship(‘Read’, backref=‘book’, cascade=‘all, delete-orphan’)
+
 movie = db.relationship(‘Movie’, backref=‘movie’, cascade=‘all, delete-orphan’)
 `
 
@@ -2491,6 +2494,7 @@ The Book model has many-to-one relationships with the with the Author and Publis
 
 `
 author_id = db.Column(db.Integer, db.ForeignKey(‘author.id’), nullable=False)
+
 publisher_id = db.Column(db.Integer, db.ForeignKey(‘publisher.id’), nullable=False)
 `
 
@@ -2513,6 +2517,7 @@ The Watched model holds a user’s rating for a movie and the id. The movie_id f
 
 `
 movie_id = db.Column(db.Integer, db.ForeignKey(‘movie.id’), nullable=False)
+
 user_id = db.Column(db.Integer, db.ForeignKey(‘user.id’), nullable=False)
 `
 
@@ -2523,6 +2528,7 @@ The relationship stated with the Book model establishes the Movie model as a chi
 
 `
 watched = db.relationship(‘Watched’, backref=‘movie’, cascade=‘all, delete-orphan’)
+
 book = db.relationship(‘Book’, overlaps=‘movie,movie’, single_parent=True, cascade=‘all, delete-orphan’)
 `
 
@@ -2530,6 +2536,7 @@ The Movie model has many-to-one relationships with the with the Director and Pro
 
 `
 director_id = db.Column(db.Integer, db.ForeignKey(‘director.id’), nullable=False)
+
 production_company_id = db.Column(db.Integer, db.ForeignKey(‘production_company.id’), nullable=False)
 `
 
