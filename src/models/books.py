@@ -12,7 +12,7 @@ class Book(db.Model):
     # Define Foreign Keys
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'), nullable=False)
     publisher_id = db.Column(db.Integer, db.ForeignKey('publisher.id'), nullable=False)
-    # Define relationship with read table
+    # Define relationships with the read and movie tables
     read = db.relationship("Read", backref="book", cascade="all, delete-orphan")
     movie = db.relationship("Movie", backref="movie", cascade="all, delete-orphan")
 
