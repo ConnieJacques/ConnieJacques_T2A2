@@ -100,9 +100,11 @@ None
 Welcome message
 
 *Example Request:*
+
 ![/](./docs/endpoints/home-url.png)
 
 *Example Response:*
+
 ![/](./docs/endpoints/home-response.png)
 
 
@@ -125,6 +127,7 @@ surname = user's surname. Datatype = string
 email = user's email address. Must be unique; user's cannot share an email address. Datatype = string
 password = user's desired password. Must be exactly 8 characters long. Datatype = string.
 
+
 ![Register Request Body](./docs/endpoints/register-rbody.png)
 
 *Authentication Required:*
@@ -134,10 +137,13 @@ None
 Message: "You have successfully registered."
 
 *Example Request:*
+
 ![Register](./docs/endpoints/register-url.png)
 
 *Example Response:*
+
 ![Register](./docs/endpoints/register-response.png)
+
 
 **Login**
 *Description:*
@@ -156,6 +162,7 @@ None
 email = user's email address that was used to register. Datatype = string
 password = user's password that was used to register. Datatype = string
 
+
 ![Login - Request Body](./docs/endpoints/login-rbody.png)
 
 *Authentication Required:*
@@ -165,9 +172,11 @@ None
 User's first_name and JWT token
 
 *Example Request:*
+
 ![Login - URL](./docs/endpoints/login-url.png)
 
 *Example Response:*
+
 ![Login - Response](./docs/endpoints/login-response.png)
 
 
@@ -196,10 +205,13 @@ List of all registered users.
 User's details will contain user_id, first_name, surname and admin status.
 
 *Example Request:*
+
 ![All Users - URL](./docs/endpoints/all-users-url.png)
 
 *Example Response:*
+
 ![All Users - Response](./docs/endpoints/all-users-response.png)
+
 
 **User by Email**
 *Description:*
@@ -225,10 +237,13 @@ Type: JWT
 User's details containing user_id, first_name, surname and admin status.
 
 *Example Request:*
+
 ![User by Email - URL](./docs/endpoints/auth-email-url.png)
 
 *Example Response:*
+
 ![User by Email - Response](./docs/endpoints/auth-email-response.png)
+
 
 **Admin Status**
 *Description:*
@@ -246,6 +261,7 @@ PUT
 *Request Body Requirements:*
 admin = True/False. Datatype = boolean
 
+
 ![Change Admin Status - Request Body](./docs/endpoints/admin-rbody.png)
 
 *Authentication Required:*
@@ -256,10 +272,13 @@ Type: JWT
 Message: "Your admin privileges have changed."
 
 *Example Request:*
+
 ![Change Admin Status - URL](./docs/endpoints/admin-url.png)
 
 *Example Response:*
+
 ![Change Admin Status - Response](./docs/endpoints/admin-response.png)
+
 
 **Update User**
 *Description:*
@@ -280,6 +299,7 @@ surname = user's surname. Datatype = string
 email = user's email address. Must be unique; user's cannot share an email address. Datatype = string
 password = user's desired password. Must be exactly 8 characters long. Datatype = string.
 
+
 ![Update User - Request Body](./docs/endpoints/update-user-rbody.png)
 
 *Authentication Required:*
@@ -290,9 +310,11 @@ Type: JWT
 Message: "You have successfully updated your information."
 
 *Example Request:*
+
 ![Update User - URL](./docs/endpoints/update-user-url.png)
 
 *Example Response:*
+
 ![Update User - Response](./docs/endpoints/update-user-response.png)
 
 
@@ -320,10 +342,13 @@ Type: JWT
 Message:  "User registration has been removed."
 
 *Example Request:*
+
 ![Delete User - URL](./docs/endpoints/delete-user-url.png)
 
 *Example Response:*
+
 ![Delete User - Response](./docs/endpoints/delete-user-response.png)
+
 
 **All Books**
 *Description:*
@@ -349,9 +374,11 @@ List of all the books in the database.
 Each book's details will contain book_id, title, isbn, length, first_publication_date, copies_published, nested author with published_name and nested publisher with publisher_name
 
 *Example Request:*
+
 ![All Books](./docs/endpoints/books-url.png)
 
 *Example Response:*
+
 ![All Books](./docs/endpoints/books-response.png)
 
 
@@ -370,7 +397,9 @@ GET
 
 A query string must begin with a question mark and be followed by the search parameter (e.g. title) = expected match (e.g. the title of the book). If a space is required it must be replaced with '%20'.
 
+
 ![Book Query String - Example URL](./docs/endpoints/book-query-example-url.png)
+
 ![Book Query String - Example URL 2](./docs/endpoints/book-query-example2.png)
 
 *Request Body Requirements:*
@@ -384,17 +413,22 @@ Books matching the query string parameters.
 The book's details will contain book_id, title, isbn, length, first_publication_date, copies_published, nested author with published_name and nested publisher with publisher_name.
 
 If the query was:
+
 ![Book Query String - Example URL 2](./docs/endpoints/book-query-example2.png)
 
 The expected output would be:
+
 ![Book Query String - Response](./docs/endpoints/book-query-response.png)
 
 *Example Request:*
+
 ![Book Query String - URL 2](./docs/endpoints/book-query-example-url2.png)
 
 *Example Response:*
 The expected response for the url example above is:
+
 ![Book Query String - Response to match URL](./docs/endpoints/book-query-response2.png)
+
 
 **Book Search ID or ISBN - Query String**
 *Description:*
@@ -424,10 +458,13 @@ Books matching the query string parameters.
 The book's details will contain book_id, title, isbn, length, first_publication_date, copies_published, nested author with published_name and nested publisher with publisher_name.
 
 *Example Request:*
+
 ![Book Query String - book_id URL](./docs/endpoints/book-search-id-url.png)
+
 ![Book Query String - isbn URL](./docs/endpoints/book-search-isbn-url.png)
 
 *Example Response:*
+
 ![Book Query String - Response](./docs/endpoints/book-search-response.png)
 
 
@@ -453,6 +490,7 @@ copies_published = number of copies published for the isbn number. Datatype: int
 author_id = foreign key - author_id. Datatype: integer
 publisher_id = foreign key - publisher_id. Datatype: integer
 
+
 ![Add Book - Request Body](./docs/endpoints/add-book-rbody.png)
 
 *Authentication Required:*
@@ -463,9 +501,11 @@ Type: JWT
 Message: "You have added a book to the table."
 
 *Example Request:*
+
 ![Add Book - Request](./docs/endpoints/add-book-url.png)
 
 *Example Response:*
+
 ![Add Book - Response](./docs/endpoints/add-book-response.png)
 
 
@@ -491,6 +531,7 @@ copies_published = number of copies published for the isbn number. Datatype: int
 author_id = foreign key - author_id. Datatype: integer
 publisher_id = foreign key - publisher_id. Datatype: integer
 
+
 ![Change Book - Request Body](./docs/endpoints/add-book-rbody.png)
 
 *Authentication Required:*
@@ -501,10 +542,13 @@ Type: JWT
 Message: "You have successfully updated the database."
 
 *Example Request:*
+
 ![Change Book - URL](./docs/endpoints/update-book-url.png)
 
 *Example Response:*
+
 ![Change Book - Response](./docs/endpoints/update-book-response.png)
+
 
 **Delete Book**
 *Description:*
@@ -530,10 +574,13 @@ Type: JWT
 Message: "You have successfully removed this book and associated information from the database."
 
 *Example Request:*
+
 ![Delete Book - URL](./docs/endpoints/delete-book-url.png)
 
 *Example Response:*
+
 ![Delete Book - Response](./docs/endpoints/delete-book-response.png)
+
 
 **All Movies**
 *Description:*
@@ -559,9 +606,11 @@ List of all the movies in the database.
 Each movies's details will contain movie_id, title, release_date, length in minutes, box_office_ranking, nested director with director_name, nested production company with name and nested book with the title of the book the movie was adapted from.
 
 *Example Request:*
+
 ![All Movies](./docs/endpoints/movies-url.png)
 
 *Example Response:*
+
 ![All Movies](./docs/endpoints/movies-response.png)
 
 
@@ -580,7 +629,9 @@ GET
 
 A query string must begin with a question mark and be followed by the search parameter (e.g. title) = expected match (e.g. the title of the movie). If a space is required it must be replaced with '%20'.
 
+
 ![Movie Query String - Example URL](./docs/endpoints/movies-query-url-example.png)
+
 ![Movie Query String - Example URL 2](./docs/endpoints/movies-query-url-example2.png)
 
 *Request Body Requirements:*
@@ -594,16 +645,20 @@ Movies matching the query string parameters.
 Each movies's details will contain movie_id, title, release_date, length in minutes, box_office_ranking, nested director with director_name, nested production company with name and nested book with the title of the book the movie was adapted from.
 
 If the query was:
+
 ![Movie Query String - Example URL 2](./docs/endpoints/movies-query-url-example2.png)
 
 The expected output would be:
+
 ![Movie Query String - Response](./docs/endpoints/movies-query-response.png)
 
 *Example Request:*
+
 ![Movie Query String - URL 2](./docs/endpoints/movie-query-url-3.png)
 
 *Example Response:*
 The expected response for the url example above is:
+
 ![Movie Query String - Response to match URL](./docs/endpoints/movie-query-response2.png)
 
 
@@ -631,11 +686,14 @@ The corresponding movie for the movie_id provided.
 The movie's details will contain movie_id, title, release_date, length in minutes, box_office_ranking, nested director with director_name, nested production company with name and nested book with the title of the book the movie was adapted from.
 
 *Example Request:*
+
 ![Movie ID - URL](./docs/endpoints/movie-id-url.png)
 
 *Example Response:*
 The expected response for the url example above is:
+
 ![Movie ID - Response](./docs/endpoints/movie-id-response.png)
+
 
 **Movie Search - Length**
 *Description:*
@@ -661,10 +719,12 @@ All movies in the database in descending order from the longest to the shortest.
 The movie's details will contain movie_id, title, release_date, length in minutes, box_office_ranking, nested director with director_name, nested production company with name and nested book with the title of the book the movie was adapted from.
 
 *Example Request:*
+
 ![Movie length - URL](./docs/endpoints/movies-length-url.png)
 
 *Example Response:*
 The expected response for the url example above is:
+
 ![Movie length - Response](./docs/endpoints/movies-length-response.png)
 
 **Movie Search - Ranking**
@@ -691,11 +751,14 @@ All movies in the database in order of box office ranking, from highest to lowes
 The movie's details will contain movie_id, title, release_date, length in minutes, box_office_ranking, nested director with director_name, nested production company with name and nested book with the title of the book the movie was adapted from.
 
 *Example Request:*
+
 ![Movie ranking - URL](./docs/endpoints/movies-ranking-url.png)
 
 *Example Response:*
 The expected response for the url example above is:
+
 ![Movie length - Response](./docs/endpoints/movies-ranking-response.png)
+
 
 **Add Movie**
 *Description:*
@@ -719,6 +782,7 @@ director_id = foreign key - director_id. Datatype: integer
 production_id = foreign key - production_id. Datatype:integer
 book_id = foreign key - book_id. Datatype: integer
 
+
 ![Add Movie - Request Body](./docs/endpoints/add-movie-rbody.png)
 
 *Authentication Required:*
@@ -729,9 +793,11 @@ Type: JWT
 Message:  "You have added a movie to the table."
 
 *Example Request:*
+
 ![Add Movie - Request](./docs/endpoints/add-movies-url.png)
 
 *Example Response:*
+
 ![Add Movie - Response](./docs/endpoints/add-movies-response.png)
 
 
@@ -757,6 +823,7 @@ director_id = foreign key - director_id. Datatype: integer
 production_id = foreign key - production_id. Datatype:integer
 book_id = foreign key - book_id. Datatype: integer
 
+
 ![Change Movie - Request Body](./docs/endpoints/add-movie-rbody.png)
 
 *Authentication Required:*
@@ -767,9 +834,11 @@ Type: JWT
 Message:  "You have successfully updated the database."
 
 *Example Request:*
+
 ![Update Movie - Request](./docs/endpoints/update-movie-url.png)
 
 *Example Response:*
+
 ![Update Movie - Response](./docs/endpoints/update-movie-response.png)
 
 
@@ -797,9 +866,11 @@ Type: JWT
 Message: "You have successfully removed this movie and associated information from the database."
 
 *Example Request:*
+
 ![Delete Movie - URL](./docs/endpoints/delete-movie-url.png)
 
 *Example Response:*
+
 ![Delete Movie - Response](./docs/endpoints/delete-movie-response.png)
 
 
@@ -827,10 +898,13 @@ List of all the authors in the database.
 Each authors's details will contain author_id, title, pen_name, collaboration and collaborator_name
 
 *Example Request:*
+
 ![All Authors](./docs/endpoints/authors-url.png)
 
 *Example Response:*
+
 ![All Authors](./docs/endpoints/authors-response.png)
+
 
 **Author Search - Query String**
 *Description:*
@@ -847,6 +921,7 @@ GET
 
 A query string must begin with a question mark and be followed by the search parameter (e.g. title) = expected match (e.g. the title of the movie). If a space is required it must be replaced with '%20'.
 
+
 ![Author Query String - Example URL](./docs/endpoints/author-query-url.png)
 
 *Request Body Requirements:*
@@ -860,16 +935,20 @@ Movies matching the query string parameters.
 Each movies's details will contain movie_id, title, release_date, length in minutes, box_office_ranking, nested director with director_name, nested production company with name and nested book with the title of the book the movie was adapted from.
 
 If the query was:
+
 ![Author Query String - Example URL 2](./docs/endpoints/author-query-url.png)
 
 The expected output would be:
+
 ![Author Query String - Response](./docs/endpoints/author-query-result.png)
 
 *Example Request:*
+
 ![Author Query String - URL 2](./docs/endpoints/author-query-url2.png)
 
 *Example Response:*
 The expected response for the url example above is:
+
 ![Author Query String - Response to match URL](./docs/endpoints/author-query-result2.png)
 
 
@@ -897,10 +976,12 @@ The corresponding author for the author_id provided.
 The authors's details will contain author_id, title, pen_name, collaboration and collaborator_name
 
 *Example Request:*
+
 ![Author ID - URL](./docs/endpoints/author-id-url.png)
 
 *Example Response:*
 The expected response for the url example above is:
+
 ![Author ID - Response](./docs/endpoints/author-query-result2.png)
 
 
@@ -923,6 +1004,7 @@ pen_name = whether a name was used or not. Datatype: boolean
 collaborator_name = name of the collaborator or null. Datatype: string
 collaboration = whether the book was written with a collaborator or not. Datatype: boolean
 
+
 ![Add Author - Request Body](./docs/endpoints/new-author-rbody.png)
 
 *Authentication Required:*
@@ -933,9 +1015,11 @@ Type: JWT
 Message:  "You have added an author to the table."
 
 *Example Request:*
+
 ![Add Author - Request](./docs/endpoints/new-author-url.png)
 
 *Example Response:*
+
 ![Add Author - Response](./docs/endpoints/new-author-response.png)
 
 
@@ -958,6 +1042,7 @@ pen_name = whether a name was used or not. Datatype: boolean
 collaborator_name = name of the collaborator or null. Datatype: string
 collaboration = whether the book was written with a collaborator or not. Datatype: boolean
 
+
 ![Change Author - Request Body](./docs/endpoints/new-author-rbody.png)
 
 *Authentication Required:*
@@ -968,10 +1053,13 @@ Type: JWT
 Message:  "You have successfully updated this author in the database."
 
 *Example Request:*
+
 ![Update Author - Request](./docs/endpoints/update-author-url.png)
 
 *Example Response:*
+
 ![Update Author - Response](./docs/endpoints/update-author-response.png)
+
 
 **All Publishers**
 *Description:*
@@ -997,9 +1085,11 @@ List of all the publishers in the database.
 Each publishers's details will contain publisher_id and publisher_name
 
 *Example Request:*
+
 ![All Publishers](./docs/endpoints/publishers-url.png)
 
 *Example Response:*
+
 ![All Publishers](./docs/endpoints/publishers-response.png)
 
 
@@ -1029,10 +1119,12 @@ Publishers matching the publisher_name.
 The publishers's details will contain the publisher_name and publisher_id.
 
 *Example Request:*
+
 ![Publisher Name - URL](./docs/endpoints/publisher-name-url.png)
 
 *Example Response:*
 The expected response for the url example above is:
+
 ![Publisher Name - Response](./docs/endpoints/publisher-name-response.png)
 
 
@@ -1060,9 +1152,11 @@ The corresponding publisher for the publisher_id provided.
 The publishers's details will container the publisher_name and publisher_id.
 
 *Example Request:*
+
 ![Publisher ID - URL](./docs/endpoints/publisher-id-url.png)
 
 *Example Response:*
+
 ![Publisher ID - Response](./docs/endpoints/publisher-name-response.png)
 
 
@@ -1082,6 +1176,7 @@ None
 *Request Body Requirements:*
 publisher_name = name of the publisher. Datatype: string
 
+
 ![Add Publisher - Request Body](./docs/endpoints/publisher-add-rbody.png)
 
 *Authentication Required:*
@@ -1092,9 +1187,11 @@ Type: JWT
 Message:  "You have added a publisher to the table."
 
 *Example Request:*
+
 ![Add Publisher - Request](./docs/endpoints/publishser-add-url.png)
 
 *Example Response:*
+
 ![Add Publisher - Response](./docs/endpoints/publisher-add-response.png)
 
 
@@ -1114,6 +1211,7 @@ PUT
 *Request Body Requirements:*
 publisher_name = name of the publisher. Datatype: string
 
+
 ![Change Publisher - Request Body](./docs/endpoints/publisher-add-rbody.png)
 
 *Authentication Required:*
@@ -1124,9 +1222,11 @@ Type: JWT
 Message:  "You have successfully updated the database."
 
 *Example Request:*
+
 ![Update Publisher - Request](./docs/endpoints/publisher-update-url.png)
 
 *Example Response:*
+
 ![Update Publisher - Response](./docs/endpoints/publisher-update-response.png)
 
 
@@ -1154,9 +1254,11 @@ List of all the directors in the database.
 Each directors's details will contain director_id and director_name
 
 *Example Request:*
+
 ![All Directors](./docs/endpoints/directors-url.png)
 
 *Example Response:*
+
 ![All Directors](./docs/endpoints/directors-response.png)
 
 
@@ -1186,10 +1288,12 @@ Directors matching the director_name.
 The directors's details will container the director_name and director_id.
 
 *Example Request:*
+
 ![Director Name - URL](./docs/endpoints/directors-name-url.png)
 
 *Example Response:*
 The expected response for the url example above is:
+
 ![Director Name - Response](./docs/endpoints/directors-name-response.png)
 
 
@@ -1217,9 +1321,11 @@ The corresponding director for the director_id provided.
 The director's details will contain the director_name and director_id.
 
 *Example Request:*
+
 ![Director ID - URL](./docs/endpoints/director-id-url.png)
 
 *Example Response:*
+
 ![Director ID - Response](./docs/endpoints/directors-name-response.png)
 
 
@@ -1239,6 +1345,7 @@ None
 *Request Body Requirements:*
 director_name = name of the director. Datatype: string
 
+
 ![Add Director - Request Body](./docs/endpoints/director-add-rbody.png)
 
 *Authentication Required:*
@@ -1249,9 +1356,11 @@ Type: JWT
 Message:  "You have added a director to the table."
 
 *Example Request:*
+
 ![Add Director - Request](./docs/endpoints/director-add-url.png)
 
 *Example Response:*
+
 ![Add Director - Response](./docs/endpoints/director-add-response.png)
 
 
@@ -1271,6 +1380,7 @@ PUT
 *Request Body Requirements:*
 director_name = name of the director. Datatype: string
 
+
 ![Change Author - Request Body](./docs/endpoints/publisher-add-rbody.png)
 
 *Authentication Required:*
@@ -1281,9 +1391,11 @@ Type: JWT
 Message:  "You have successfully updated the database."
 
 *Example Request:*
+
 ![Update Director - Request](./docs/endpoints/director-update-url.png)
 
 *Example Response:*
+
 ![Update Director - Response](./docs/endpoints/director-update-response.png)
 
 
@@ -1311,9 +1423,11 @@ List of all the production companies in the database.
 Each production companies's details will contain production_id and production_name
 
 *Example Request:*
+
 ![All Production Companies](./docs/endpoints/production-url.png)
 
 *Example Response:*
+
 ![All Production Companies](./docs/endpoints/production-response.png)
 
 
@@ -1343,10 +1457,12 @@ Production companies matching the production_id.
 The production companies details will contain the production_name and production_id.
 
 *Example Request:*
+
 ![Production Company Name - URL](./docs/endpoints/production-name-url.png)
 
 *Example Response:*
 The expected response for the url example above is:
+
 ![Production Company Name - Response](./docs/endpoints/production-name-response.png)
 
 
@@ -1374,9 +1490,11 @@ The corresponding production company for the production_id provided.
 The production companies details will contain the production_name and production_id.
 
 *Example Request:*
+
 ![Production ID - URL](./docs/endpoints/production-id-url.png)
 
 *Example Response:*
+
 ![Production ID - Response](./docs/endpoints/production-id-response.png)
 
 
@@ -1396,6 +1514,7 @@ None
 *Request Body Requirements:*
 name = name of the production company. Datatype: string
 
+
 ![Add Production Company - Request Body](./docs/endpoints/add-production-rbody.png)
 
 *Authentication Required:*
@@ -1406,9 +1525,11 @@ Type: JWT
 Message:  "You have added a production company to the table."
 
 *Example Request:*
+
 ![Add Production Company - Request](./docs/endpoints/add-production-url.png)
 
 *Example Response:*
+
 ![Add Production Company - Response](./docs/endpoints/add-production-response.png)
 
 
@@ -1428,6 +1549,7 @@ PUT
 *Request Body Requirements:*
 name = name of the production company. Datatype: string
 
+
 ![Change Production Company - Request Body](./docs/endpoints/update-response-rbody.png)
 
 *Authentication Required:*
@@ -1438,9 +1560,11 @@ Type: JWT
 Message:  "You have successfully updated the database."
 
 *Example Request:*
+
 ![Update Production - Request](./docs/endpoints/update-prodction-url.png)
 
 *Example Response:*
+
 ![Update Production Company - Response](./docs/endpoints/update-production-response.png)
 
 
@@ -1467,9 +1591,11 @@ None
 Message: "The average rating of this book is: {average rating}"
 
 *Example Request:*
+
 ![Average Rating](./docs/endpoints/read-rating-url.png)
 
 *Example Response:*
+
 ![Average Rating](./docs/endpoints/read-rating-response.png)
 
 **User's Read Ratings**
@@ -1497,9 +1623,11 @@ List of all the user's reviews from the read table
 Each review's details will contain the read_id, rating, nested book with title and nested user with first_name and surname
 
 *Example Request:*
+
 ![Read ID](./docs/endpoints/read-id-url.png)
 
 *Example Response:*
+
 ![Read ID](./docs/endpoints/read-id-response.png)
 
 
@@ -1520,6 +1648,7 @@ None
 book_id = book_id for the book to review. Datatype: integer
 rating = user's rating for the book. Datatype: integer
 
+
 ![Add Review - Request Body](./docs/endpoints/rating-add-rbody.png)
 
 *Authentication Required:*
@@ -1530,10 +1659,13 @@ Type: JWT
 Message:  "You have added a review."
 
 *Example Request:*
+
 ![Add Review - Request](./docs/endpoints/rating-add-url.png)
 
 *Example Response:*
+
 ![Add Review - Response](./docs/endpoints/rating-add-response.png)
+
 
 **Update Read Rating**
 *Description:*
@@ -1551,6 +1683,7 @@ PUT
 *Request Body Requirements:*
 rating = user's rating for the book. Datatype: integer
 
+
 ![Update Review - Request Body](./docs/endpoints/update-review-rbody.png)
 
 *Authentication Required:*
@@ -1561,10 +1694,13 @@ Type: JWT
 Message:  "You have successfully updated your rating for this book."
 
 *Example Request:*
+
 ![Update Review - Request](./docs/endpoints/update-review-url.png)
 
 *Example Response:*
+
 ![Update Review - Response](./docs/endpoints/update-review-response.png)
+
 
 **Delete Read Review**
 *Description:*
@@ -1590,10 +1726,13 @@ Type: JWT
 Message: "You have successfully deleted your review for this book."
 
 *Example Request:*
+
 ![Delete Review - URL](./docs/endpoints/delete-review-url.png)
 
 *Example Response:*
+
 ![Delete REview - Response](./docs/endpoints/delete-review-response.png)
+
 
 **Watched - Average Rating**
 *Description:*
@@ -1618,9 +1757,11 @@ None
 Message: "The average rating of this movie is: {average rating}"
 
 *Example Request:*
+
 ![Average Rating](./docs/endpoints/watched-rating-url.png)
 
 *Example Response:*
+
 ![Average Rating](./docs/endpoints/watched-rating-response.png)
 
 
@@ -1649,9 +1790,11 @@ List of all the user's reviews from the watched table
 Each review's details will contain the watched_id, rating, nested movie with title and nested user with first_name and surname
 
 *Example Request:*
+
 ![Watched ID](./docs/endpoints/watched-id-url.png)
 
 *Example Response:*
+
 ![Watched ID](./docs/endpoints/watched-id-response.png)
 
 
@@ -1672,6 +1815,7 @@ None
 movie_id = movie_id for the movie to review. Datatype: integer
 rating = user's rating for the book. Datatype: integer
 
+
 ![Add Review - Request Body](./docs/endpoints/watched-add-rbody.png)
 
 *Authentication Required:*
@@ -1682,9 +1826,11 @@ Type: JWT
 Message:  "You have added a review."
 
 *Example Request:*
+
 ![Add Review - Request](./docs/endpoints/watched-add-url.png)
 
 *Example Response:*
+
 ![Add Review - Response](./docs/endpoints/rating-add-response.png)
 
 **Update Watched Rating**
@@ -1703,6 +1849,7 @@ PUT
 *Request Body Requirements:*
 rating = user's rating for the movie. Datatype: integer
 
+
 ![Update Review - Request Body](./docs/endpoints/update-review-rbody.png)
 
 *Authentication Required:*
@@ -1713,10 +1860,13 @@ Type: JWT
 Message:  "You have successfully updated your rating for this movie."
 
 *Example Request:*
+
 ![Update Review - Request](./docs/endpoints/watched-update-url.png)
 
 *Example Response:*
+
 ![Update Review - Response](./docs/endpoints/watched-update-response.png)
+
 
 **Delete Watched Review**
 *Description:*
@@ -1742,9 +1892,11 @@ Type: JWT
 Message: "You have successfully deleted your review for this movie."
 
 *Example Request:*
+
 ![Delete Review - URL](./docs/endpoints/watched-delete-url.png)
 
 *Example Response:*
+
 ![Delete REview - Response](./docs/endpoints/watched-delete-response.png)
 
 ### R6. An ERD for your app
@@ -1773,6 +1925,93 @@ DateTime: The python package DateTime is used to create datetime objects and for
 
 
 ### R8. Describe your projects models in terms of the relationships they have with each other
+
+There are nine models used in this project. As this API uses PostgreSQL, a ORDBMS, SQLAlchemy, a ORM tool, will be used to construct the relationships between models/tables. Foreign Keys are used to imbed a Primary Key from another table into a model, establishing a relationship between the two tables, where relevant data is stored in one table but is available in another. The SQLAlchemy relationship function is then used to further define the relationship and establish it as a one-to-one, one-to-many, many-to-one or many-to-many relationship. Join tables are required for many-to-many relationships and act an intermediary to connect a many-to-many relationship in the form of two one-to-many relationships, where the join table sits on the many side of the relation. The relationships are established as parent-child relations.
+
+**User Model:**
+The User model holds a user’s id, first name, surname, unique email address, password and admin status. It has a zero to many relationship with the Read and Watched models; a user can make zero or many entries in the Read and Watched tables. The relationship function is used to solidify the User model as the parent class, and uses the backref parameter to specify the zero-to-many relationship in one direction only. Cascading delete is used to remove all entries from the Read and Watched tables, if a correlating user entry is removed from the database. 
+
+`
+watched = db.relationship(‘Watched’, backref=‘user’, cascade=‘all, delete’)
+read = db.relationship(‘Read’, backref=‘user’, cascade=‘all, delete’)
+`
+
+**Read Model:**
+The Read model holds a user’s rating for a book and the id. The book_id from the Book table is used to specify which book the user is rating and user_id from the User table is used to specify which user owns the rating. It has many to zero relationships with the User and Book models and is a joining table for a many-to-many relationship between the User and Book models. Foreign Keys consisting of the Primary Keys for the User and Book tables are used to solidify the Read model as a child of the User and Book tables.
+
+`
+book_id = db.Column(db.Integer, db.ForeignKey(‘book.id’), nullable=False)
+user_id = db.Column(db.Integer, db.ForeignKey(‘user.id’), nullable=False)
+`
+
+**Book Model:**
+The Book models holds a book’s id, title, unique isbn number, length in pages, first publication date and the number of copies printed for that edition (corresponding with the isbn number). It has a zero to many relationship with the Read and Movie tables; a user can review zero or many books via the Read table and a book can be adapted into zero or many movies. The relationship function is used to solidify the Book model as the parent class to the Read model, and uses the backref parameter to specify the zero-to-many relationship with the Read model in one direction only. The relationship stated with the Movie model also establishes the Book model as the parent of the Movie class, and also uses the backref parameter, but to reference to the movie itself, rather than the book; because, the relationship is allowed to be bi-directional through the use the overlaps and single_parent parameters on the same relationship statement in the Movie table (that references back to the Book model); thus the relationship is allow to back flow so that if a book entry is removed from the table, all associated movie entries are also removed but the deletion of a movie entry will not remove the associated book entry.
+
+`
+read = db.relationship(‘Read’, backref=‘book’, cascade=‘all, delete-orphan’)
+movie = db.relationship(‘Movie’, backref=‘movie’, cascade=‘all, delete-orphan’)
+`
+
+The Book model has many-to-one relationships with the with the Author and Publisher models. Foreign Keys consisting of the Primary Keys for the Author and Publisher models are used to solidify the Book table as the child of the Author and Publisher tables.
+
+`
+author_id = db.Column(db.Integer, db.ForeignKey(‘author.id’), nullable=False)
+publisher_id = db.Column(db.Integer, db.ForeignKey(‘publisher.id’), nullable=False)
+`
+
+**Author Model:**
+The Author model holds an author’s id, published name, collaboration status, pen name status and the name of a collaborator. It has a one-to-many relationship with the Book model; an author can belong to one or many books. The relationship function is used to solidify the Author model as the parent class, and uses the backref parameter to specify the one-to-many relationship in one direction only.
+
+`
+author = db.relationship(‘Book’, backref=‘author’)
+`
+
+**Publisher Model:**
+The Publisher model holds a publisher’s id and name. It has a one-to-many relationship with the Book model; a publisher can belong to one or many books. The relationship function is used to solidify the Publisher model as the parent class, and uses the backref parameter to specify the one-to-many relationship in one direction only.
+
+`
+publisher = db.relationship(‘Book’, backref=‘publisher’)
+`
+
+**Watched Model:**
+The Watched model holds a user’s rating for a movie and the id. The movie_id from the Movie table is used to specify which movie the user is rating and user_id from the User table is used to specify which user owns the rating. It has many to zero relationships with the User and Movie models and is a joining table for a many-to-many relationship between the User and Movie models. Foreign Keys consisting of the Primary Keys for the User and Movie tables are used to solidify the Watched model as a child of the User and Movie tables.
+
+`
+movie_id = db.Column(db.Integer, db.ForeignKey(‘movie.id’), nullable=False)
+user_id = db.Column(db.Integer, db.ForeignKey(‘user.id’), nullable=False)
+`
+
+**Movie Model:**
+The Movie models holds a movie’s id, title, release date, length in minutes and box office ranking. It has a zero to many relationship with the Watched table; a user can review zero or many movies via the Watched table. It has a many-to-one relationship with the Book table; a movie can be adapted from one book only. The relationship function is used to solidify the Move model as the parent class to the Watched model, and uses the backref parameter to specify the zero-to-many relationship with the Watched model in one direction only.
+
+The relationship stated with the Book model establishes the Movie model as a child of the Book class. The relationship with the Book model is copied from the relationship established between the Book and Movie models in the Book model via a backref to the Movie model. The relationship statement in the Movie model to the Book model uses the overlaps and single_parent=True parameters to map directly to the relationship already established relationship in the Book model and defines the relationship between a movie and a book as a one-to-one relationship for the purpose of deletion. This allows for an associated entry to be removed from the Movie table when a book is deleted, but prevents associated book entries from being removed if an entry is deleted from the Movie table. 
+
+`
+watched = db.relationship(‘Watched’, backref=‘movie’, cascade=‘all, delete-orphan’)
+book = db.relationship(‘Book’, overlaps=‘movie,movie’, single_parent=True, cascade=‘all, delete-orphan’)
+`
+
+The Movie model has many-to-one relationships with the with the Director and ProductionCompany models. Foreign Keys consisting of the Primary Keys for the Director and ProductionCompany models are used to solidify the Movie table as the child of the Director and ProductionCompany tables.
+
+`
+director_id = db.Column(db.Integer, db.ForeignKey(‘director.id’), nullable=False)
+production_company_id = db.Column(db.Integer, db.ForeignKey(‘production_company.id’), nullable=False)
+`
+
+**Director Model:**
+The Director model holds a dictior’s id and name. It has a one-to-many relationship with the Movie model; a director can belong to one or many movies. The relationship function is used to solidify the Director model as the parent class, and uses the backref parameter to specify the one-to-many relationship in one direction only.
+
+`
+director = db.relationship(‘Movie’, backref=‘director’)
+`
+
+**ProductionCompany Model:**
+The ProductionCompany model holds a production companies id and name. It has a one-to-many relationship with the Movie model; a production company can belong to one or many movies. The relationship function is used to solidify the ProductionCompany model as the parent class, and uses the backref parameter to specify the one-to-many relationship in one direction only.
+
+`
+production = db.relationship(‘Movie’, backref=‘production’)
+`
+
 
 ### R9. Discuss the database relations to be implemented in your application
 
