@@ -186,26 +186,35 @@ http://127.0.0.1:5000
 All end point’s described here must begin with the local host URL.
 
 
+
 **Home**
+
 *Description:*
+
 Home route.
 
 *Method:*
+
 GET
 
 *URL:*
+
 /
 
 *Search Parameters:*
+
 None
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 Welcome message
 
 *Example Request:*
@@ -218,19 +227,25 @@ Welcome message
 
 
 **Register**
+
 *Description:*
+
 Register a new user
 
 *Method:*
+
 POST
 
 *URL:*
+
 /auth/register
 
 *Search Parameters:*
+
 None
 
 *Request Body Requirements:*
+
 first_name = user's first name. Datatype = string
 surname = user's surname. Datatype = string
 email = user's email address. Must be unique; user's cannot share an email address. Datatype = string
@@ -240,9 +255,11 @@ password = user's desired password. Must be exactly 8 characters long. Datatype 
 ![Register Request Body](./docs/endpoints/register-rbody.png)
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 Message: "You have successfully registered."
 
 *Example Request:*
@@ -255,19 +272,25 @@ Message: "You have successfully registered."
 
 
 **Login**
+
 *Description:*
+
 Login for an existing user. Returns a JSON Web Token that is required to access restricted routes.
 
 *Method:*
+
 POST
 
 *URL:*
+
 /auth/login
 
 *Search Parameters:*
+
 None
 
 *Request Body Requirements:*
+
 email = user's email address that was used to register. Datatype = string
 password = user's password that was used to register. Datatype = string
 
@@ -275,9 +298,11 @@ password = user's password that was used to register. Datatype = string
 ![Login - Request Body](./docs/endpoints/login-rbody.png)
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 User's first_name and JWT token
 
 *Example Request:*
@@ -290,26 +315,34 @@ User's first_name and JWT token
 
 
 **All Users**
+
 *Description:*
+
 Allow a user with admin privileges to see all registered users.
 
 *Method:*
+
 GET
 
 *URL:*
+
 /auth/user/all
 
 *Search Parameters:*
+
 None
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 List of all registered users.
 User's details will contain user_id, first_name, surname and admin status.
 
@@ -323,26 +356,34 @@ User's details will contain user_id, first_name, surname and admin status.
 
 
 **User by Email**
+
 *Description:*
+
 Allow a user to search for their details in the database with their email address
 
 *Method:*
+
 GET
 
 *URL:*
+
 /auth/user/{email}
 
 *Search Parameters:*
+
 {email} = user's email address
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 User's details containing user_id, first_name, surname and admin status.
 
 *Example Request:*
@@ -355,29 +396,37 @@ User's details containing user_id, first_name, surname and admin status.
 
 
 **Admin Status**
+
 *Description:*
+
 Allow a user with admin privileges to change the admin status of a user
 
 *Method:*
+
 PUT
 
 *URL:*
+
 /auth/register/admin/{user_id}
 
 *Search Parameters:*
+
 {user_id} = user_id of the user whose admin status is to be changed.
 
 *Request Body Requirements:*
+
 admin = True/False. Datatype = boolean
 
 
 ![Change Admin Status - Request Body](./docs/endpoints/admin-rbody.png)
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 Message: "Your admin privileges have changed."
 
 *Example Request:*
@@ -390,19 +439,25 @@ Message: "Your admin privileges have changed."
 
 
 **Update User**
+
 *Description:*
+
 Allow a registered user to change their first_name, surname, email and password.
 
 *Method:*
+
 PUT
 
 *URL:*
+
 /auth/user/update
 
 *Search Parameters:*
+
 None
 
 *Request Body Requirements:*
+
 first_name = user's first name. Datatype = string
 surname = user's surname. Datatype = string
 email = user's email address. Must be unique; user's cannot share an email address. Datatype = string
@@ -412,10 +467,12 @@ password = user's desired password. Must be exactly 8 characters long. Datatype 
 ![Update User - Request Body](./docs/endpoints/update-user-rbody.png)
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 Message: "You have successfully updated your information."
 
 *Example Request:*
@@ -428,26 +485,34 @@ Message: "You have successfully updated your information."
 
 
 **Unregister User**
+
 *Description:*
+
 Allow users to unregister/remove themselves from the database
 
 *Method:*
+
 DELETE
 
 *URL:*
+
 /auth/user/unregister/{email}
 
 *Search Parameters:*
+
 {email} = the email the user is registered with
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 Message:  "User registration has been removed."
 
 *Example Request:*
@@ -460,25 +525,32 @@ Message:  "User registration has been removed."
 
 
 **All Books**
+
 *Description:*
+
 Allow anyone to get a list of all the books in the database
 
 *Method:*
+
 GET
 
 *URL:*
+
 /books/
 
 *Search Parameters:*
+
 None
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
 None
 
 *Expected Response:*
+
 List of all the books in the database.
 Each book's details will contain book_id, title, isbn, length, first_publication_date, copies_published, nested author with published_name and nested publisher with publisher_name
 
@@ -492,16 +564,21 @@ Each book's details will contain book_id, title, isbn, length, first_publication
 
 
 **Book Search - Query String**
+
 *Description:*
+
 Allow anyone to search for books in the database using a query string to search by title, length, author_id or publisher_id.
 
 *Method:*
+
 GET
 
 *URL:*
+
 /books/search{query string}
 
 *Search Parameters:*
+
 {query string} = a query string to match up title with book title, length with book length, author_id to match with all books containing that author_id or publisher_id to match with all books containing that publisher_id.
 
 A query string must begin with a question mark and be followed by the search parameter (e.g. title) = expected match (e.g. the title of the book). If a space is required it must be replaced with '%20'.
@@ -512,12 +589,15 @@ A query string must begin with a question mark and be followed by the search par
 ![Book Query String - Example URL 2](./docs/endpoints/book-query-example2.png)
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 Books matching the query string parameters.
 The book's details will contain book_id, title, isbn, length, first_publication_date, copies_published, nested author with published_name and nested publisher with publisher_name.
 
@@ -534,35 +614,44 @@ The expected output would be:
 ![Book Query String - URL 2](./docs/endpoints/book-query-example-url2.png)
 
 *Example Response:*
+
 The expected response for the url example above is:
 
 ![Book Query String - Response to match URL](./docs/endpoints/book-query-response2.png)
 
 
 **Book Search ID or ISBN - Query String**
+
 *Description:*
+
 Allow anyone to search for a book by the book_id or unique isbn.
 
 **Please note that the ISBN numbers used in the existing entries in the database are ISBN10 numbers for the first edition printing of each book.
 
 *Method:*
+
 GET
 
 *URL:*
+
 /books/search/{query string}
 
 *Search Parameters:*
+
 {query string} = either the book_id or ISBN number.
 
 A query string must begin with a question mark and be followed by the search parameter (e.g. isbn) = expected match (e.g. the book's isbn).
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 Books matching the query string parameters.
 The book's details will contain book_id, title, isbn, length, first_publication_date, copies_published, nested author with published_name and nested publisher with publisher_name.
 
@@ -578,19 +667,25 @@ The book's details will contain book_id, title, isbn, length, first_publication_
 
 
 **Add Book**
+
 *Description:*
+
 Allow a user with admin privileges to add a new book to the database
 
 *Method:*
+
 POST
 
 *URL:*
+
 /books/add
 
 *Search Parameters:*
+
 None
 
 *Request Body Requirements:*
+
 title = book title. Datatype: string
 isbn = book's unique isbn10. Datatype:string
 length = number of pages. Datatype: string
@@ -603,10 +698,12 @@ publisher_id = foreign key - publisher_id. Datatype: integer
 ![Add Book - Request Body](./docs/endpoints/add-book-rbody.png)
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 Message: "You have added a book to the table."
 
 *Example Request:*
@@ -619,19 +716,25 @@ Message: "You have added a book to the table."
 
 
 **Update Book**
+
 *Description:*
+
 Allow a user with admin privileges to change the details for an existing book in the database
 
 *Method:*
+
 PUT
 
 *URL:*
+
 /books/update/{book_id}
 
 *Search Parameters:*
+
 {book_id} = the book_id for the book whose details are to be changed
 
 *Request Body Requirements:*
+
 title = book title. Datatype: string
 isbn = book's unique isbn10. Datatype: string
 length = number of pages. Datatype: string
@@ -644,10 +747,12 @@ publisher_id = foreign key - publisher_id. Datatype: integer
 ![Change Book - Request Body](./docs/endpoints/add-book-rbody.png)
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 Message: "You have successfully updated the database."
 
 *Example Request:*
@@ -660,26 +765,34 @@ Message: "You have successfully updated the database."
 
 
 **Delete Book**
+
 *Description:*
+
 Allow a user with admin privileges to delete an existing book from the database
 
 *Method:*
+
 DELETE
 
 *URL:*
+
 /books/delete/{book_id}
 
 *Search Parameters:*
+
 {book_id} = the book_id for the book to be deleted
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 Message: "You have successfully removed this book and associated information from the database."
 
 *Example Request:*
@@ -692,25 +805,33 @@ Message: "You have successfully removed this book and associated information fro
 
 
 **All Movies**
+
 *Description:*
+
 Allow anyone to get a list of all the movies in the database
 
 *Method:*
+
 GET
 
 *URL:*
+
 /movies/
 
 *Search Parameters:*
+
 None
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 List of all the movies in the database.
 Each movies's details will contain movie_id, title, release_date, length in minutes, box_office_ranking, nested director with director_name, nested production company with name and nested book with the title of the book the movie was adapted from.
 
@@ -724,16 +845,21 @@ Each movies's details will contain movie_id, title, release_date, length in minu
 
 
 **Movie Search - Query String**
+
 *Description:*
+
 Allow anyone to search for movies in the database using a query string to search by title, director_id, production_company_id or book_id.
 
 *Method:*
+
 GET
 
 *URL:*
+
 /movies/search{query string}
 
 *Search Parameters:*
+
 {query string} = a query string to match up title with movie title, director_id to match with all movies containing that director_id, production_company_id to match with all movies containing that production_company_id or book_id to match with all movies adapted from the book with that book_id.
 
 A query string must begin with a question mark and be followed by the search parameter (e.g. title) = expected match (e.g. the title of the movie). If a space is required it must be replaced with '%20'.
@@ -744,12 +870,15 @@ A query string must begin with a question mark and be followed by the search par
 ![Movie Query String - Example URL 2](./docs/endpoints/movies-query-url-example2.png)
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 Movies matching the query string parameters.
 Each movies's details will contain movie_id, title, release_date, length in minutes, box_office_ranking, nested director with director_name, nested production company with name and nested book with the title of the book the movie was adapted from.
 
@@ -766,31 +895,40 @@ The expected output would be:
 ![Movie Query String - URL 2](./docs/endpoints/movie-query-url-3.png)
 
 *Example Response:*
+
 The expected response for the url example above is:
 
 ![Movie Query String - Response to match URL](./docs/endpoints/movie-query-response2.png)
 
 
 **Movie Search - movie_id**
+
 *Description:*
+
 Allow anyone to search for movies in the database by the movie_id.
 
 *Method:*
+
 GET
 
 *URL:*
+
 /movies/search/{movie_id}
 
 *Search Parameters:*
+
 {movie_id} = the movie_id for the movie in the database
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 The corresponding movie for the movie_id provided.
 The movie's details will contain movie_id, title, release_date, length in minutes, box_office_ranking, nested director with director_name, nested production company with name and nested book with the title of the book the movie was adapted from.
 
@@ -799,31 +937,40 @@ The movie's details will contain movie_id, title, release_date, length in minute
 ![Movie ID - URL](./docs/endpoints/movie-id-url.png)
 
 *Example Response:*
+
 The expected response for the url example above is:
 
 ![Movie ID - Response](./docs/endpoints/movie-id-response.png)
 
 
 **Movie Search - Length**
+
 *Description:*
+
 Allow anyone to search for all movies in the database and order them by length in descending order.
 
 *Method:*
+
 GET
 
 *URL:*
+
 /movies/search/length
 
 *Search Parameters:*
+
 None
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 All movies in the database in descending order from the longest to the shortest.
 The movie's details will contain movie_id, title, release_date, length in minutes, box_office_ranking, nested director with director_name, nested production company with name and nested book with the title of the book the movie was adapted from.
 
@@ -832,30 +979,39 @@ The movie's details will contain movie_id, title, release_date, length in minute
 ![Movie length - URL](./docs/endpoints/movies-length-url.png)
 
 *Example Response:*
+
 The expected response for the url example above is:
 
 ![Movie length - Response](./docs/endpoints/movies-length-response.png)
 
 **Movie Search - Ranking**
+
 *Description:*
+
 Allow anyone to search for all movies in the database and order them in descending order by box office ranking.
 
 *Method:*
+
 GET
 
 *URL:*
+
 /movies/search/ranking
 
 *Search Parameters:*
+
 None
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 All movies in the database in order of box office ranking, from highest to lowest.
 The movie's details will contain movie_id, title, release_date, length in minutes, box_office_ranking, nested director with director_name, nested production company with name and nested book with the title of the book the movie was adapted from.
 
@@ -864,25 +1020,32 @@ The movie's details will contain movie_id, title, release_date, length in minute
 ![Movie ranking - URL](./docs/endpoints/movies-ranking-url.png)
 
 *Example Response:*
+
 The expected response for the url example above is:
 
 ![Movie length - Response](./docs/endpoints/movies-ranking-response.png)
 
 
 **Add Movie**
+
 *Description:*
+
 Allow a user with admin privileges to add a new movie to the database
 
 *Method:*
+
 POST
 
 *URL:*
+
 /movies/add
 
 *Search Parameters:*
+
 None
 
 *Request Body Requirements:*
+
 title = book title. Datatype: string
 release_date = date of release. Datatype: DateTime. Formatted as DD/MM/YYYY inside quotation marks
 box_office_ranking = international box office ranking at date of addition to database. Datatype: integer
@@ -895,10 +1058,12 @@ book_id = foreign key - book_id. Datatype: integer
 ![Add Movie - Request Body](./docs/endpoints/add-movie-rbody.png)
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 Message:  "You have added a movie to the table."
 
 *Example Request:*
@@ -911,19 +1076,25 @@ Message:  "You have added a movie to the table."
 
 
 **Update Movie**
+
 *Description:*
+
 Allow a user with admin privileges to change the details for an existing movie in the database
 
 *Method:*
+
 PUT
 
 *URL:*
+
 /movies/update/{movie_id}
 
 *Search Parameters:*
+
 {movie_id} = the movie_id for the book whose details are to be changed
 
 *Request Body Requirements:*
+
 title = book title. Datatype: string
 release_date = date of release. Datatype: DateTime. Formatted as DD/MM/YYYY inside quotation marks
 box_office_ranking = international box office ranking at date of addition to database. Datatype: integer
@@ -936,10 +1107,12 @@ book_id = foreign key - book_id. Datatype: integer
 ![Change Movie - Request Body](./docs/endpoints/add-movie-rbody.png)
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 Message:  "You have successfully updated the database."
 
 *Example Request:*
@@ -952,26 +1125,34 @@ Message:  "You have successfully updated the database."
 
 
 **Delete Movie**
+
 *Description:*
+
 Allow a user with admin privileges to delete an existing movie from the database
 
 *Method:*
+
 DELETE
 
 *URL:*
+
 /movies/delete/{movie_id}
 
 *Search Parameters:*
+
 {movie_id} = the movie_id for the movie to be deleted
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 Message: "You have successfully removed this movie and associated information from the database."
 
 *Example Request:*
@@ -984,25 +1165,33 @@ Message: "You have successfully removed this movie and associated information fr
 
 
 **All Authors**
+
 *Description:*
+
 Allow anyone to get a list of all the authors in the database
 
 *Method:*
+
 GET
 
 *URL:*
+
 /authors/
 
 *Search Parameters:*
+
 None
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 List of all the authors in the database.
 Each authors's details will contain author_id, title, pen_name, collaboration and collaborator_name
 
@@ -1016,16 +1205,21 @@ Each authors's details will contain author_id, title, pen_name, collaboration an
 
 
 **Author Search - Query String**
+
 *Description:*
+
 Allow anyone to search for authors in the database using a query string to search by published_name, collaboration (true/false), pen_name (true/false) or collaborator_name.
 
 *Method:*
+
 GET
 
 *URL:*
+
 /authors/search{query string}
 
 *Search Parameters:*
+
 {query string} = a query string to match up title with published_name, collaboration (true/false), pen_name (true/false) or the name of a collaborator with collaborator_name.
 
 A query string must begin with a question mark and be followed by the search parameter (e.g. title) = expected match (e.g. the title of the movie). If a space is required it must be replaced with '%20'.
@@ -1034,12 +1228,15 @@ A query string must begin with a question mark and be followed by the search par
 ![Author Query String - Example URL](./docs/endpoints/author-query-url.png)
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 Movies matching the query string parameters.
 Each movies's details will contain movie_id, title, release_date, length in minutes, box_office_ranking, nested director with director_name, nested production company with name and nested book with the title of the book the movie was adapted from.
 
@@ -1056,31 +1253,40 @@ The expected output would be:
 ![Author Query String - URL 2](./docs/endpoints/author-query-url2.png)
 
 *Example Response:*
+
 The expected response for the url example above is:
 
 ![Author Query String - Response to match URL](./docs/endpoints/author-query-result2.png)
 
 
 **Author Search - author_id**
+
 *Description:*
+
 Allow anyone to search for an author in the database by their author_id.
 
 *Method:*
+
 GET
 
 *URL:*
+
 /authors/search/{author_id}
 
 *Search Parameters:*
+
 {author_id} = the author_id for the author in the database
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 The corresponding author for the author_id provided.
 The authors's details will contain author_id, title, pen_name, collaboration and collaborator_name
 
@@ -1089,25 +1295,32 @@ The authors's details will contain author_id, title, pen_name, collaboration and
 ![Author ID - URL](./docs/endpoints/author-id-url.png)
 
 *Example Response:*
+
 The expected response for the url example above is:
 
 ![Author ID - Response](./docs/endpoints/author-query-result2.png)
 
 
 **Add Author**
+
 *Description:*
+
 Allow a user with admin privileges to add a new author to the database
 
 *Method:*
+
 POST
 
 *URL:*
+
 /authors/add
 
 *Search Parameters:*
+
 None
 
 *Request Body Requirements:*
+
 published_name = published name of the author. Datatype: string
 pen_name = whether a name was used or not. Datatype: boolean
 collaborator_name = name of the collaborator or null. Datatype: string
@@ -1117,10 +1330,12 @@ collaboration = whether the book was written with a collaborator or not. Datatyp
 ![Add Author - Request Body](./docs/endpoints/new-author-rbody.png)
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 Message:  "You have added an author to the table."
 
 *Example Request:*
@@ -1133,19 +1348,25 @@ Message:  "You have added an author to the table."
 
 
 **Update Author**
+
 *Description:*
+
 Allow a user with admin privileges to change the details for an existing author in the database
 
 *Method:*
+
 PUT
 
 *URL:*
+
 /authors/update/{author_id}
 
 *Search Parameters:*
+
 {author_id} = the author_id for the author whose details are to be changed
 
 *Request Body Requirements:*
+
 published_name = published name of the author. Datatype: string
 pen_name = whether a name was used or not. Datatype: boolean
 collaborator_name = name of the collaborator or null. Datatype: string
@@ -1155,10 +1376,12 @@ collaboration = whether the book was written with a collaborator or not. Datatyp
 ![Change Author - Request Body](./docs/endpoints/new-author-rbody.png)
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 Message:  "You have successfully updated this author in the database."
 
 *Example Request:*
@@ -1171,25 +1394,33 @@ Message:  "You have successfully updated this author in the database."
 
 
 **All Publishers**
+
 *Description:*
+
 Allow anyone to get a list of all the publishers in the database
 
 *Method:*
+
 GET
 
 *URL:*
+
 /publishers/
 
 *Search Parameters:*
+
 None
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 List of all the publishers in the database.
 Each publishers's details will contain publisher_id and publisher_name
 
@@ -1203,27 +1434,35 @@ Each publishers's details will contain publisher_id and publisher_name
 
 
 **Publishers Search - publisher_name**
+
 *Description:*
+
 Allow anyone to search for publishers in the database using the name of the publisher
 
 *Method:*
+
 GET
 
 *URL:*
+
 /publishers/search/name/{publisher_name}
 
 *Search Parameters:*
+
 {publisher_name} = name of the publisher in the database.
 
 If a space is required it must be replaced with '%20'.
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 Publishers matching the publisher_name.
 The publishers's details will contain the publisher_name and publisher_id.
 
@@ -1232,31 +1471,40 @@ The publishers's details will contain the publisher_name and publisher_id.
 ![Publisher Name - URL](./docs/endpoints/publisher-name-url.png)
 
 *Example Response:*
+
 The expected response for the url example above is:
 
 ![Publisher Name - Response](./docs/endpoints/publisher-name-response.png)
 
 
 **Publisher Search - publisher_id**
+
 *Description:*
+
 Allow anyone to search for a publisher in the database by their publisher_id.
 
 *Method:*
+
 GET
 
 *URL:*
+
 /publishers/search/{publisher_id}
 
 *Search Parameters:*
+
 {publisher_id} = the publisher_id for the publisher in the database
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 The corresponding publisher for the publisher_id provided.
 The publishers's details will container the publisher_name and publisher_id.
 
@@ -1270,29 +1518,37 @@ The publishers's details will container the publisher_name and publisher_id.
 
 
 **Add Publisher**
+
 *Description:*
+
 Allow a user with admin privileges to add a new publisher to the database
 
 *Method:*
+
 POST
 
 *URL:*
+
 /publishers/add
 
 *Search Parameters:*
+
 None
 
 *Request Body Requirements:*
+
 publisher_name = name of the publisher. Datatype: string
 
 
 ![Add Publisher - Request Body](./docs/endpoints/publisher-add-rbody.png)
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 Message:  "You have added a publisher to the table."
 
 *Example Request:*
@@ -1305,29 +1561,37 @@ Message:  "You have added a publisher to the table."
 
 
 **Update Publisher**
+
 *Description:*
+
 Allow a user with admin privileges to change the details for an existing publisher in the database
 
 *Method:*
+
 PUT
 
 *URL:*
+
 /publishers/update/{publisher_id}
 
 *Search Parameters:*
+
 {publisher_id} = the publisher_id for the publisher whose details are to be changed
 
 *Request Body Requirements:*
+
 publisher_name = name of the publisher. Datatype: string
 
 
 ![Change Publisher - Request Body](./docs/endpoints/publisher-add-rbody.png)
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 Message:  "You have successfully updated the database."
 
 *Example Request:*
@@ -1340,25 +1604,33 @@ Message:  "You have successfully updated the database."
 
 
 **All Directors**
+
 *Description:*
+
 Allow anyone to get a list of all the directors in the database
 
 *Method:*
+
 GET
 
 *URL:*
+
 /directors/
 
 *Search Parameters:*
+
 None
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 List of all the directors in the database.
 Each directors's details will contain director_id and director_name
 
@@ -1372,16 +1644,21 @@ Each directors's details will contain director_id and director_name
 
 
 **Directors Search - director_name**
+
 *Description:*
+
 Allow anyone to search for directors in the database using the name of the director
 
 *Method:*
+
 GET
 
 *URL:*
+
 /directors/search/name/{director_name}
 
 *Search Parameters:*
+
 {director_name} = name of the director in the database.
 
 If a space is required it must be replaced with '%20'.
@@ -1390,9 +1667,11 @@ If a space is required it must be replaced with '%20'.
 None
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 Directors matching the director_name.
 The directors's details will container the director_name and director_id.
 
@@ -1401,31 +1680,40 @@ The directors's details will container the director_name and director_id.
 ![Director Name - URL](./docs/endpoints/directors-name-url.png)
 
 *Example Response:*
+
 The expected response for the url example above is:
 
 ![Director Name - Response](./docs/endpoints/directors-name-response.png)
 
 
 **Director Search - director_id**
+
 *Description:*
+
 Allow anyone to search for a publisher in the database by their director_id.
 
 *Method:*
+
 GET
 
 *URL:*
+
 /directors/search/{director_id}
 
 *Search Parameters:*
+
 {director_id} = the director_id for the director in the database
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 The corresponding director for the director_id provided.
 The director's details will contain the director_name and director_id.
 
@@ -1439,29 +1727,37 @@ The director's details will contain the director_name and director_id.
 
 
 **Add Director**
+
 *Description:*
+
 Allow a user with admin privileges to add a new director to the database
 
 *Method:*
+
 POST
 
 *URL:*
+
 /directors/add
 
 *Search Parameters:*
+
 None
 
 *Request Body Requirements:*
+
 director_name = name of the director. Datatype: string
 
 
 ![Add Director - Request Body](./docs/endpoints/director-add-rbody.png)
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 Message:  "You have added a director to the table."
 
 *Example Request:*
@@ -1474,29 +1770,37 @@ Message:  "You have added a director to the table."
 
 
 **Update Director**
+
 *Description:*
+
 Allow a user with admin privileges to change the details for an existing director in the database
 
 *Method:*
+
 PUT
 
 *URL:*
+
 /directors/update/{director_id}
 
 *Search Parameters:*
+
 {director_id} = the director_id for the director whose details are to be changed
 
 *Request Body Requirements:*
+
 director_name = name of the director. Datatype: string
 
 
 ![Change Author - Request Body](./docs/endpoints/publisher-add-rbody.png)
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 Message:  "You have successfully updated the database."
 
 *Example Request:*
@@ -1509,25 +1813,33 @@ Message:  "You have successfully updated the database."
 
 
 **All Production Companies**
+
 *Description:*
+
 Allow anyone to get a list of all the production companies in the database
 
 *Method:*
+
 GET
 
 *URL:*
+
 /production/
 
 *Search Parameters:*
+
 None
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 List of all the production companies in the database.
 Each production companies's details will contain production_id and production_name
 
@@ -1541,27 +1853,35 @@ Each production companies's details will contain production_id and production_na
 
 
 **Production Company Search - production_name**
+
 *Description:*
+
 Allow anyone to search for production companies in the database using the name of the production company
 
 *Method:*
+
 GET
 
 *URL:*
+
 /production/search/name/{production_name}
 
 *Search Parameters:*
+
 {production_name} = name of the production company in the database.
 
 If a space is required it must be replaced with '%20'.
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 Production companies matching the production_id.
 The production companies details will contain the production_name and production_id.
 
@@ -1570,35 +1890,45 @@ The production companies details will contain the production_name and production
 ![Production Company Name - URL](./docs/endpoints/production-name-url.png)
 
 *Example Response:*
+
 The expected response for the url example above is:
 
 ![Production Company Name - Response](./docs/endpoints/production-name-response.png)
 
 
 **Production Company Search - production_id**
+
 *Description:*
+
 Allow anyone to search for a production company in the database by their production_id.
 
 *Method:*
+
 GET
 
 *URL:*
+
 /production/search/{production_id}
 
 *Search Parameters:*
+
 {production_id} = the production_id for the production company in the database
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 The corresponding production company for the production_id provided.
 The production companies details will contain the production_name and production_id.
 
 *Example Request:*
+
 
 ![Production ID - URL](./docs/endpoints/production-id-url.png)
 
@@ -1608,29 +1938,37 @@ The production companies details will contain the production_name and production
 
 
 **Add Production Company**
+
 *Description:*
+
 Allow a user with admin privileges to add a new production company to the database
 
 *Method:*
+
 POST
 
 *URL:*
+
 /production/add
 
 *Search Parameters:*
+
 None
 
 *Request Body Requirements:*
+
 name = name of the production company. Datatype: string
 
 
 ![Add Production Company - Request Body](./docs/endpoints/add-production-rbody.png)
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 Message:  "You have added a production company to the table."
 
 *Example Request:*
@@ -1643,29 +1981,37 @@ Message:  "You have added a production company to the table."
 
 
 **Update Production Company**
+
 *Description:*
+
 Allow a user with admin privileges to change the details for an existing production company in the database
 
 *Method:*
+
 PUT
 
 *URL:*
+
 /production/update/{production_id}
 
 *Search Parameters:*
+
 {production_id} = the production_id for the production company whose details are to be changed
 
 *Request Body Requirements:*
+
 name = name of the production company. Datatype: string
 
 
 ![Change Production Company - Request Body](./docs/endpoints/update-response-rbody.png)
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 Message:  "You have successfully updated the database."
 
 *Example Request:*
@@ -1678,25 +2024,33 @@ Message:  "You have successfully updated the database."
 
 
 **Read - Average Rating**
+
 *Description:*
+
 Allow anyone to get the average rating of a book from the database by querying the read table.
 
 *Method:*
+
 GET
 
 *URL:*
+
 /read/rating/{book_id}
 
 *Search Parameters:*
+
 {book_id} = the book_id of the book you wish see the average rating for.
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 Message: "The average rating of this book is: {average rating}"
 
 *Example Request:*
@@ -1708,26 +2062,34 @@ Message: "The average rating of this book is: {average rating}"
 ![Average Rating](./docs/endpoints/read-rating-response.png)
 
 **User's Read Ratings**
+
 *Description:*
+
 Allow a user to get a list of the books they have reviewed.
 
 *Method:*
+
 GET
 
 *URL:*
+
 /read/{user_id}
 
 *Search Parameters:*
+
 {user_id} = the user_id of the user wishing to their reviews
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 List of all the user's reviews from the read table
 Each review's details will contain the read_id, rating, nested book with title and nested user with first_name and surname
 
@@ -1741,19 +2103,25 @@ Each review's details will contain the read_id, rating, nested book with title a
 
 
 **Add Read Rating**
+
 *Description:*
+
 Allow a user with admin privileges to add a new review to the database
 
 *Method:*
+
 POST
 
 *URL:*
+
 /read/add
 
 *Search Parameters:*
+
 None
 
 *Request Body Requirements:*
+
 book_id = book_id for the book to review. Datatype: integer
 rating = user's rating for the book. Datatype: integer
 
@@ -1761,10 +2129,12 @@ rating = user's rating for the book. Datatype: integer
 ![Add Review - Request Body](./docs/endpoints/rating-add-rbody.png)
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 Message:  "You have added a review."
 
 *Example Request:*
@@ -1777,29 +2147,37 @@ Message:  "You have added a review."
 
 
 **Update Read Rating**
+
 *Description:*
+
 Allow a user to the change the rating in one of their own reviews
 
 *Method:*
+
 PUT
 
 *URL:*
+
 /read/update/{read_id}
 
 *Search Parameters:*
+
 {read_id} = the read_id for the review the user wishes to change
  
 *Request Body Requirements:*
+
 rating = user's rating for the book. Datatype: integer
 
 
 ![Update Review - Request Body](./docs/endpoints/update-review-rbody.png)
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 Message:  "You have successfully updated your rating for this book."
 
 *Example Request:*
@@ -1812,26 +2190,34 @@ Message:  "You have successfully updated your rating for this book."
 
 
 **Delete Read Review**
+
 *Description:*
+
 Allow a user to the delete one of their own reviews
 
 *Method:*
+
 DELETE
 
 *URL:*
+
 /read/delete/{read_id}
 
 *Search Parameters:*
+
 {read_id} = the read_id for the review to be deleted
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 Message: "You have successfully deleted your review for this book."
 
 *Example Request:*
@@ -1844,25 +2230,33 @@ Message: "You have successfully deleted your review for this book."
 
 
 **Watched - Average Rating**
+
 *Description:*
+
 Allow anyone to get the average rating of a movie from the database by querying the watched table.
 
 *Method:*
+
 GET
 
 *URL:*
+
 /watched/rating/{movie_id}
 
 *Search Parameters:*
+
 {movie_id} = the movie_id of the movie you wish see the average rating for.
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 None
 
 *Expected Response:*
+
 Message: "The average rating of this movie is: {average rating}"
 
 *Example Request:*
@@ -1875,26 +2269,34 @@ Message: "The average rating of this movie is: {average rating}"
 
 
 **User's Watched Ratings**
+
 *Description:*
+
 Allow a user to get a list of the movies they have reviewed.
 
 *Method:*
+
 GET
 
 *URL:*
+
 /watched/{user_id}
 
 *Search Parameters:*
+
 {user_id} = the user_id of the user wishing to their reviews
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 List of all the user's reviews from the watched table
 Each review's details will contain the watched_id, rating, nested movie with title and nested user with first_name and surname
 
@@ -1908,19 +2310,25 @@ Each review's details will contain the watched_id, rating, nested movie with tit
 
 
 **Add Watched Rating**
+
 *Description:*
+
 Allow a user with admin privileges to add a new review to the database
 
 *Method:*
+
 POST
 
 *URL:*
+
 /watched/add
 
 *Search Parameters:*
+
 None
 
 *Request Body Requirements:*
+
 movie_id = movie_id for the movie to review. Datatype: integer
 rating = user's rating for the book. Datatype: integer
 
@@ -1928,10 +2336,12 @@ rating = user's rating for the book. Datatype: integer
 ![Add Review - Request Body](./docs/endpoints/watched-add-rbody.png)
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 Message:  "You have added a review."
 
 *Example Request:*
@@ -1943,29 +2353,37 @@ Message:  "You have added a review."
 ![Add Review - Response](./docs/endpoints/rating-add-response.png)
 
 **Update Watched Rating**
+
 *Description:*
+
 Allow a user to the change the rating in one of their own reviews
 
 *Method:*
+
 PUT
 
 *URL:*
+
 /watched/update/{watched_id}
 
 *Search Parameters:*
+
 {watched_id} = the watched_id for the review the user wishes to change
  
 *Request Body Requirements:*
+
 rating = user's rating for the movie. Datatype: integer
 
 
 ![Update Review - Request Body](./docs/endpoints/update-review-rbody.png)
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 Message:  "You have successfully updated your rating for this movie."
 
 *Example Request:*
@@ -1978,26 +2396,34 @@ Message:  "You have successfully updated your rating for this movie."
 
 
 **Delete Watched Review**
+
 *Description:*
+
 Allow a user to the delete one of their own reviews
 
 *Method:*
+
 DELETE
 
 *URL:*
+
 /watched/delete/{watched_id}
 
 *Search Parameters:*
+
 {watched_id} = the watched_id for the review to be deleted
 
 *Request Body Requirements:*
+
 None
 
 *Authentication Required:*
+
 Bearer token required
 Type: JWT
 
 *Expected Response:*
+
 Message: "You have successfully deleted your review for this movie."
 
 *Example Request:*
@@ -2237,6 +2663,8 @@ Cards were made and completed for each section of the API to reflect the require
 Cards were marked off after coding was "completed" and the last of the documentation for the README was added
 ![Trello Board Update - R5 and R8 Underway](./docs/readme-finalisation.png)
 ![Trello Board Update - Endpoints and Model Relationships Completed](./docs/endpoints-relations-completed.png)
+![Trello Board Update - Database Set Up and Flask Instructions/Read over README](./docs/setup-final-read.png)
+![Trello Board Update - Ready to Submit](./docs/submit.png)
 
 ## References 
 
