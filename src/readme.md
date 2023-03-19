@@ -1,6 +1,9 @@
 # Connie Jacques - API Webserver Project
 
 
+Github repository is available at: 
+[Github Repository]
+
 ### Database Set Up and Flask Instructions
 
 This API has been built using Python3 on a Flask framework. The database used is PostgreSQL. Postgres must be installed and the database set up before the API can be used on a local host server. 
